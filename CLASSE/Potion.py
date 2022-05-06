@@ -64,7 +64,7 @@ class Potion(Article):
         # calcule de ligne de 25 caractere
         strTemp1 = ""
         strTemp2 = ""
-        strFinal = ""
+        strFinal = f"║{'Description:':<25}║"
         while True:
             #terminer la boucle si il n'y a plus rien
             if len(lstDescription) == 0:
@@ -94,3 +94,5 @@ class Potion(Article):
         strChaine += f"\n║{'Prix total: '+self.PrixTotal()+'φ':<25}║"
         strChaine += f"\n╚{'═'*25}╝"
 
+        #return
+        return strChaine
