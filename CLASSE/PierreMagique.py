@@ -22,7 +22,7 @@ from Article import Article
 #################
 ### PROGRAMME ###
 #################
-class Potion(Article):
+class PierreMagique(Article):
     """
     classe enfant de la classe Article
     """
@@ -32,65 +32,33 @@ class Potion(Article):
             p_articleID = "",
             p_quantite = 0,
             p_prix = 0.00,
-            p_effetPotion = "",
-            p_dureePotion = ""
+            p_energiePierre = ""
             ):
         Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix)
-        self._effetPotion = p_effetPotion
-        self._dureePotion = p_dureePotion
+        self._energiePierre = p_energiePierre
     
     ###########
     # GET/SET #
-    ###########    
-    def _get_EffetPotion(self):
-        return self._effetPotion
-    def _set_EffetPotion(self, p_EffetPotion):
-        self._effetPotion = p_EffetPotion
-    EffetPotion = property(_get_EffetPotion(), _set_EffetPotion())    
-    
-    def _get_DureePotion(self):
-        return self._dureePotion
-    def _set_DureePotion(self, p_DureePotion):
-        if len(p_DureePotion) <= 17:
-            self._dureePotion = p_DureePotion
-    DureePotion = property(_get_DureePotion(), _set_DureePotion())
+    ###########        
+    def _get_EnergiePierre(self):
+        return self._energiePierre
+    def _set_EnergiePierre(self, p_EnergiePierre):
+        if len(p_EnergiePierre) <= 17:
+            self._energiePierre = p_EnergiePierre
+    EnergiePierre = property(_get_EnergiePierre(), _set_EnergiePierre())
 
     #################
     # Autre Methode #
     #################
     def __str__(self):
-        # separation de la description en plusieur lignes de 25 caractere
-        lstDescription = self._effetPotion.split()
-        # calcule de ligne de 25 caractere
-        strTemp1 = ""
-        strTemp2 = ""
-        strFinal = ""
-        while True:
-            #terminer la boucle si il n'y a plus rien
-            if len(lstDescription) == 0:
-                strFinal += f"\n║{strTemp2:^25}║"
-                break
-            
-            #analyse
-            strTemp1 += f"{lstDescription[0]} "
-            if len(strTemp1) <= 25:
-                strTemp2 = strTemp1
-                del lstDescription[0]
-            else: #creation de la chaine qui sera mis dans strChaine (voir en bas)
-                strFinal += f"\n║{strTemp2:<25}║"
-                strTemp1 = ""
-                strTemp2 = ""
-
         # creation de la chaine
         strChaine = f"\n╔{'═'*25}╗"
         strChaine += f"\n║{self._articleName:^25}║"
         strChaine += f"\n╠{'═'*25}╣"
-        strChaine += f"{strFinal}"
-        strChaine += f"\n║{'Durée: '+self._dureePotion:<25}║"
+        strChaine += f"\n║{'Énergie: '+self._dureePotion:<25}║"
         strChaine += f"\n╠{'═'*25}╣"
         strChaine += f"\n║{'ID: '+self._articleID:<25}║"
         strChaine += f"\n║{'Quantite: '+self._quantite:<25}║"
         strChaine += f"\n║{'Prix: '+self._prix+'φ/unité':<25}║"
         strChaine += f"\n║{'Prix total: '+self.PrixTotal()+'φ':<25}║"
         strChaine += f"\n╚{'═'*25}╝"
-
