@@ -88,7 +88,7 @@ class Facture:
         if self.Client.credit < cout:
             return False #Pas assez de credit (φ) pour payer
         else:
-            self.Client.Payer(cout,self.Numero)
+            self.Client.Payer(cout)
             self.Serialisation()
             return True
         
@@ -96,6 +96,12 @@ class Facture:
         """
         Creation d'un fichier pour serialiser la facture
         """
-        tf = open(f"DATACENTER/{self._numero}.json","w")
+        #creation du fichier
+        tf = open(f"DATACENTER/Factures/{self._numero}.json","w")
         json.dump(self.__dict__(),tf,indent=4,sort_keys=True)
         tf.close
+
+        #ajout du raccourci
+        tf = open(f"DATACENTER/Factures/raccourci.txt", "a")
+        tf.write(f"{self._numero}\n")
+        tf.close()

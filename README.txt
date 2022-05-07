@@ -16,3 +16,8 @@ Dans Sortillege:
 
 Dans PierreMagique:
 	Supprition de l'attribut nomPierreMagique
+
+Dans Client:
+	Ajout de la methode dict
+	Ajout de la methode Serialisation
+	Ajout de la methode Payer
