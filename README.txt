@@ -5,6 +5,8 @@ Dans Article:
 
 Dans Facture:
 	Ajout de l'attribut Client
+	Ajout de la methode dict
+	Supprition de la methode AnnulerPaye
 
 Dans Potion:
 	Supprition de l'attribut nomPotion

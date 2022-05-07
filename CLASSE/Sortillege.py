@@ -3,7 +3,7 @@
 ### Travail: Projet de fin de session
 ### Nom: Guillaume Paoli
 ### Numero Étudiant: 2142678
-### Description du fichier: Classe Potion
+### Description du fichier: Classe Sortillege
 ###########################################################################
 
 ###################
