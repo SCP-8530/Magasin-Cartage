@@ -1,4 +1,5 @@
 === MISE A JOUR DANS L'UML ===
+---Date:06/05/2022---
 Dans Article:
 	Ajout PrixTotal()
 	Modification de l'attribut articleRefNum en articleID
@@ -6,18 +7,22 @@ Dans Article:
 Dans Facture:
 	Ajout de l'attribut Client
 	Ajout de la methode dict
-	Supprition de la methode AnnulerPaye
+	Supretion de la methode AnnulerPaye
 
 Dans Potion:
-	Supprition de l'attribut nomPotion
+	Supretion de l'attribut nomPotion
 
 Dans Sortillege:
-	Supprition de l'attribut nomSortillege
+	Supretion de l'attribut nomSortillege
 
 Dans PierreMagique:
-	Supprition de l'attribut nomPierreMagique
+	Supretion de l'attribut nomPierreMagique
 
 Dans Client:
 	Ajout de la methode dict
 	Ajout de la methode Serialisation
 	Ajout de la methode Payer
+
+---Date:06/05/2022---
+Dans Client
+    Supretion de l'attribut numeroClient #Utilisation de identifiant comme "numero"

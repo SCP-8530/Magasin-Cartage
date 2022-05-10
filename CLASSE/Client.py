@@ -32,14 +32,12 @@ class Client:
             p_identifiant = "",
             p_mdp = "",
             p_credit = 0.00,
-            p_numero = 100000,
             p_LstFacture = []
             ):
             self._prenom = p_prenom
             self._identifiant = p_identifiant
             self._mdp = p_mdp
             self._credit = p_credit
-            self._numero = p_numero
             self.LstFacture = p_LstFacture
 
     ###########
@@ -71,15 +69,6 @@ class Client:
         if p_Credit.isdecimal == True:
             self._credit = float(p_Credit)
     Credit = property(_get_Credit(),_set_Credit())
-
-    def _get_Numero(self):
-        return self._numero
-    def _set_Numero(self, p_Numero):
-        if p_Numero.numeric == True:    
-            # L'id doit etre composer de 5 chiffre, j'ajoute 100000 pour
-            # stocker l'id dans les "0"
-            self._numero = int(p_Numero) + 100000
-    numero = property(_get_Numero(),_set_Numero())
     
     #################
     # Autre Methode #
@@ -94,7 +83,6 @@ class Client:
             ["Identifiant"]:self._identifiant,
             ["MDP"]:self._mdp,
             ["Credit"]:self._credit,
-            ["Numero"]:self._numero,
             ["LstFacture"]:self.LstFacture,
         }
 
@@ -109,7 +97,6 @@ class Client:
         StrChaine +=f"* Identifiant: {self._identifiant}"
         StrChaine +=f"* MDP: {self._mdp}"
         StrChaine +=f"* Credit: {self._credit}"
-        StrChaine +=f"* Numero: {self._numero}"
         StrChaine +=f"* LstFacture: {self.LstFacture}"
         StrChaine += "**********"
 
@@ -120,14 +107,14 @@ class Client:
         Creation d'un fichier pour serialiser le client
         """
         #creation du fichier
-        tf = open(f"DATACENTER/User/{self._numero}.json","w")
+        tf = open(f"DATACENTER/User/{self._identifiant}.json","w")
         json.dump(self.__dict__(),tf,indent=4,sort_keys=True)
-        tf.close
+        tf.close()
         
         #ajout du raccourci si c'est un nouveau client qui vient d'etre creer
         if New == True:
             tf = open(f"DATACENTER/Factures/raccourci.txt", "a")
-            tf.write(f"{self._numero}\n")
+            tf.write(f"{self._identifiant}\n")
             tf.close()
 
     def Payer(self,p_Cout):
