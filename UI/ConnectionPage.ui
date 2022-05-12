@@ -55,7 +55,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Identifiant:</string>
+    <string>Identifiant :</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelMotDePasse">
@@ -74,7 +74,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Mot de passe:</string>
+    <string>Mot de passe :</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEditIdentifiant">
