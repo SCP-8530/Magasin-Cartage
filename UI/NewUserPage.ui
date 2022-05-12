@@ -188,10 +188,34 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="sizeIncrement">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
+   <property name="baseSize">
+    <size>
+     <width>0</width>
+     <height>0</height>
+    </size>
+   </property>
    <property name="text">
-    <string>Créé le compte</string>
+    <string>Créer le compte</string>
    </property>
   </widget>
+  <zorder>buttonNewUser</zorder>
+  <zorder>labelTitle</zorder>
+  <zorder>labelPrenom</zorder>
+  <zorder>lineEditPrenom</zorder>
+  <zorder>labelIdentifiant</zorder>
+  <zorder>lineEditIdentifiant</zorder>
+  <zorder>labelMDP</zorder>
+  <zorder>lineEditMDP</zorder>
+  <zorder>lineEditMDPConfirmation</zorder>
+  <zorder>lineEditCredits</zorder>
+  <zorder>labelMDPConfirmation</zorder>
+  <zorder>labelCredit</zorder>
  </widget>
  <resources/>
  <connections/>
