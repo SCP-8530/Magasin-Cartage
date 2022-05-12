@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QLabel" name="labelTitle">
    <property name="geometry">
     <rect>
      <x>0</x>
@@ -34,7 +34,7 @@
     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;=== Création d'un nouveau compte ===&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_2">
+  <widget class="QLabel" name="labelPrenom">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -50,10 +50,10 @@
     </font>
    </property>
    <property name="text">
-    <string>Prenom:</string>
+    <string>Prenom :</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="lineEditPrenom">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -63,7 +63,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label_3">
+  <widget class="QLabel" name="labelIdentifiant">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -79,10 +79,10 @@
     </font>
    </property>
    <property name="text">
-    <string>Identifiant:</string>
+    <string>Identifiant :</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_2">
+  <widget class="QLineEdit" name="lineEditIdentifiant">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -92,7 +92,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label_4">
+  <widget class="QLabel" name="labelMDP">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -108,10 +108,10 @@
     </font>
    </property>
    <property name="text">
-    <string>Mot de passe:</string>
+    <string>Mot de passe :</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_3">
+  <widget class="QLineEdit" name="lineEditMDP">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -121,7 +121,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_4">
+  <widget class="QLineEdit" name="lineEditMDPConfirmation">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -131,7 +131,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_5">
+  <widget class="QLineEdit" name="lineEditCredits">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -141,7 +141,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="label_5">
+  <widget class="QLabel" name="labelMDPConfirmation">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -157,10 +157,10 @@
     </font>
    </property>
    <property name="text">
-    <string>Confirmation:</string>
+    <string>Confirmation :</string>
    </property>
   </widget>
-  <widget class="QLabel" name="label_6">
+  <widget class="QLabel" name="labelCredit">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -176,10 +176,10 @@
     </font>
    </property>
    <property name="text">
-    <string>Credit:</string>
+    <string>Credits :</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="buttonNewUser">
    <property name="geometry">
     <rect>
      <x>92</x>
@@ -189,7 +189,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Créé le compte</string>
    </property>
   </widget>
  </widget>
