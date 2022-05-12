@@ -54,15 +54,28 @@ class Facture:
     #################
     def __str__(self) -> str:
         """
-        Creation d'un string des informations
+        Creation d'un string des informations a afficher dans le labelPanier
         """
-        StrChaine = f"\n*************************"
-        StrChaine += f"\n* Numero: {self._numero}"
-        StrChaine += f"\n* Date: {self._date}"
-        StrChaine += f"\n* LstArticle: {self.LstArticle}" 
-        StrChaine += f"\n* Client: {self.Client}"
-        StrChaine += f"\n*************************"
+        #parcourrir la liste des article pour recuperer un ligne de string
+        StrArticle = ""
+        for index in self.LstArticle:
+            nom = self.LstArticle[index].ArticleName
+            quantite = self.LstArticle[index].Quantite
+            prix = self.LstArticle[index].PrixTotal()
 
+            StrArticle += f"{f'{nom}({quantite})':<30}{f'{prix}φ':>10}"
+
+        #creation du string
+        StrChaine = ""
+        StrChaine += f"\n{'*'*40}"
+        StrChaine += f"\n* {'Numero de Facture: '+{self._numero}:36} *"
+        StrChaine += f"\n* {'Date: '+{self._date}:36} *"
+        StrChaine += f"\n* {'Cout Total:':<20}{f'{self.PrixTotal()}φ':>16} *"
+        StrChaine += f"\n{'*'*40}"
+        StrChaine += f"\n{'Nom(Quantite)':<25}{'Prix':>15}"
+        StrChaine += f"\n{StrArticle}"
+
+        #envoie du string
         return StrChaine
 
     def __dict__(self) -> dict:
@@ -94,11 +107,14 @@ class Facture:
         return fltPrixTotal
 
     def PayerFacture(self):
+        """
+        Assure le payement de la facture
+        """
         #recuperation du cout
         cout = self.PrixTotal()
 
         #verifier que vous pouvez payer
-        if self.Client.credit < cout:
+        if self.Client.Credit < cout:
             return False #Pas assez de credit (φ) pour payer
         else:
             self.Client.Payer(cout)
@@ -107,7 +123,7 @@ class Facture:
         
     def Serialisation(self):
         """
-        Creation d'un fichier pour serialiser la facture
+        Creation d'un fichier pour serialiser la facture lorsqu'elle est payer
         """
         #creation du fichier
         tf = open(f"DATACENTER/Factures/{self._numero}.json","w")

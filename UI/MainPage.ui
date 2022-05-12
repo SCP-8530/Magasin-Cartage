@@ -7,20 +7,20 @@
     <x>0</x>
     <y>0</y>
     <width>800</width>
-    <height>600</height>
+    <height>539</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTextBrowser" name="textBrowserLstArticle">
+   <widget class="QTextBrowser" name="textBrowserInventaire">
     <property name="geometry">
      <rect>
       <x>20</x>
       <y>60</y>
       <width>401</width>
-      <height>491</height>
+      <height>441</height>
      </rect>
     </property>
    </widget>
@@ -46,10 +46,10 @@
    <widget class="QPushButton" name="buttonAjouter">
     <property name="geometry">
      <rect>
-      <x>440</x>
+      <x>450</x>
       <y>190</y>
       <width>151</width>
-      <height>28</height>
+      <height>31</height>
      </rect>
     </property>
     <property name="text">
@@ -112,6 +112,97 @@
     </property>
     <property name="text">
      <string>Quantité:</string>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowserPanier">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>310</y>
+      <width>321</width>
+      <height>192</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelPanier">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>270</y>
+      <width>321</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Comic Sans MS</family>
+      <pointsize>15</pointsize>
+     </font>
+    </property>
+    <property name="text">
+     <string>Panier</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelErreur">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>140</y>
+      <width>321</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>MS Shell Dlg 2</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 0, 0);</string>
+    </property>
+    <property name="text">
+     <string>* labelErreur</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonRetirer">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>190</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Retirer du panier</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonPayer">
+    <property name="geometry">
+     <rect>
+      <x>450</x>
+      <y>230</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Payer</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="buttonFacture">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>230</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Voir mes factures</string>
     </property>
    </widget>
   </widget>
