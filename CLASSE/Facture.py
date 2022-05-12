@@ -52,7 +52,20 @@ class Facture:
     #################
     # Autre Methode #
     #################
-    def __dict__(self):
+    def __str__(self) -> str:
+        """
+        Creation d'un string des informations
+        """
+        StrChaine = f"\n*************************"
+        StrChaine += f"\n* Numero: {self._numero}"
+        StrChaine += f"\n* Date: {self._date}"
+        StrChaine += f"\n* LstArticle: {self.LstArticle}" 
+        StrChaine += f"\n* Client: {self.Client}"
+        StrChaine += f"\n*************************"
+
+        return StrChaine
+
+    def __dict__(self) -> dict:
         """
         creation d'un dictionnaire des informations
         """
