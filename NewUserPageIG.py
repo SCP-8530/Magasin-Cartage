@@ -3,16 +3,13 @@
 ### Travail: Projet de fin de session
 ### Nom: Guillaume Paoli
 ### Numero Étudiant: 2142678
-### Description du fichier: Fichier Main
+### Description du fichier: Classe NewUserPageIG
 ###########################################################################
 
 ###################
 ### IMPORTATION ###
 ###################
-import ConnectionPageIG
-import MainIG
-import NewUserPageIG
-import sys
+from INTERFACEGRAPHIQUE.PY import NewUserPage
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 ##########################################################
@@ -22,17 +19,30 @@ from PyQt5.QtCore import pyqtSlot
 ###############################
 ### DECLARATION DE FONCTION ###
 ###############################
-def Main():
-    """
-    Ouvre la page principal du magasin
-    """
-    app = QtWidgets.QApplication(sys.argv)
-    form = MainIG.gui()
-    form.show()
-    app.exec()
 
 #################
 ### PROGRAMME ###
 #################
-if __name__ == "__main__":
-    Main()
+class gui(QtWidgets.QDialog, NewUserPage.Ui_Dialog):
+    """
+    Demarre l'application par une page de connection
+    """
+    ################
+    # Constructeur #
+    ################
+    def __init__(self, parent=None):
+        super(gui, self).__init__(parent)
+        self.setupUi(self)
+        #customisation
+        self.setWindowTitle("Creation de compte")
+    
+    ##########
+    # Bouton #
+    ##########
+    @pyqtSlot()
+    def on_buttonNewUser_clicked(self):
+        """
+        Connecte un utilisateur si il rentre le bon identifiant et MDP
+        """
+        self.close()
+    
