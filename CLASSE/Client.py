@@ -48,27 +48,27 @@ class Client:
     def _set_Prenom(self, p_Prenom):
         if len(p_Prenom) <= 25:
             self._prenom = p_Prenom
-    Prenom = property(_get_Prenom(),_set_Prenom())
+    Prenom = property(_get_Prenom,_set_Prenom)
 
     def _get_Identifiant(self):
         return self._prenom
     def _set_Identifiant(self, p_Identifiant):
         if len(p_Identifiant) == 6:
             self._identifiant = p_Identifiant
-    Identifiant = property(_get_Identifiant(),_set_Identifiant())
+    Identifiant = property(_get_Identifiant,_set_Identifiant)
     
     def _get_MDP(self):
         return self._mdp
     def _set_MDP(self, p_MDP):
         self._mdp = p_MDP
-    MDP = property(_get_MDP(),_set_MDP())
+    MDP = property(_get_MDP,_set_MDP)
 
     def _get_Credit(self):
         return self._credit
     def _set_Credit(self, p_Credit):
         if p_Credit.isdecimal == True:
             self._credit = float(p_Credit)
-    Credit = property(_get_Credit(),_set_Credit())
+    Credit = property(_get_Credit,_set_Credit)
     
     #################
     # Autre Methode #

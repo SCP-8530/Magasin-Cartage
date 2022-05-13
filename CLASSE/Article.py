@@ -39,21 +39,21 @@ class Article:
     def _set_ArticleName(self, p_ArticleName):
         if len(p_ArticleName) <= 25:
             self._articleName = p_ArticleName
-    ArticleName = property(_get_ArticleName(), _set_ArticleName())
+    ArticleName = property(_get_ArticleName, _set_ArticleName)
     
     def _get_ArticleID(self):
         return self._articleID
     def _set_ArticleID(self, p_ArticleID):
         if len(p_ArticleID) == 4 and p_ArticleID.isnumeric() == True:
             self._articleID = p_ArticleID
-    ArticleID = property(_get_ArticleID(), _set_ArticleID())
+    ArticleID = property(_get_ArticleID, _set_ArticleID)
     
     def _get_Quantite(self):
         return self._quantite
     def _set_Quantite(self, p_Quantite=""):
         if p_Quantite.isnumeric() == True:
             self._quantite = int(p_Quantite)
-    Quantite = property(_get_Quantite(), _set_Quantite())
+    Quantite = property(_get_Quantite, _set_Quantite)
     
     def _get_Prix(self):
         return self._prix

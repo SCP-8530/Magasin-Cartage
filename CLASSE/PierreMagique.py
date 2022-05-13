@@ -45,7 +45,7 @@ class PierreMagique(Article):
     def _set_EnergiePierre(self, p_EnergiePierre):
         if len(p_EnergiePierre) <= 17:
             self._energiePierre = p_EnergiePierre
-    EnergiePierre = property(_get_EnergiePierre(), _set_EnergiePierre())
+    EnergiePierre = property(_get_EnergiePierre, _set_EnergiePierre)
 
     #################
     # Autre Methode #

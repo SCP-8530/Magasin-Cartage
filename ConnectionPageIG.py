@@ -9,7 +9,8 @@
 ###################
 ### IMPORTATION ###
 ###################
-from INTERFACEGRAPHIQUE.PY import ConnectionPage
+import INTERFACEGRAPHIQUE.PY.ConnectionPage as ConnectionPage
+import NewUserPageIG
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 ##########################################################
@@ -51,4 +52,6 @@ class gui(QtWidgets.QDialog, ConnectionPage.Ui_Dialog):
         """
         Ouvre la page de creation d'un nouvelle utilisateur
         """
-        self.close()
+        form = NewUserPageIG.gui()
+        form.show()
+        form.exec_()

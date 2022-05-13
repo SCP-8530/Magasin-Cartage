@@ -48,19 +48,19 @@ class Potion(Article):
         return self._effetSortillege
     def _set_EffetSortillege(self, p_EffetSortillege):
         self._effetSortillege = p_EffetSortillege
-    EffetSortillege = property(_get_EffetSortillege(), _set_EffetSortillege())    
+    EffetSortillege = property(_get_EffetSortillege, _set_EffetSortillege)    
     
     def _get_EnergieNecessaire(self):
         return self._energieNecessaire
     def _set_EnergieNecessaire(self, p_EnergieNecessaire):
         self._energieNecessaire = p_EnergieNecessaire
-    EnergieNecessaire = property(_get_EnergieNecessaire(), _set_EnergieNecessaire())
+    EnergieNecessaire = property(_get_EnergieNecessaire, _set_EnergieNecessaire)
 
     def _get_SacrificeNecessaire(self):
         return self._sacrificeNecessaire
     def _set_SacrificeNecessaire(self, p_SacrificeNecessaire):
         self._sacrificeNecessaire = p_SacrificeNecessaire
-    SacrificeNecessaire = property(_get_SacrificeNecessaire(), _set_SacrificeNecessaire())
+    SacrificeNecessaire = property(_get_SacrificeNecessaire, _set_SacrificeNecessaire)
 
     #################
     # Autre Methode #

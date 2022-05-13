@@ -9,10 +9,12 @@
 ###################
 ### IMPORTATION ###
 ###################
-from INTERFACEGRAPHIQUE.PY import MainPage
+import sys
+import INTERFACEGRAPHIQUE.PY.MainPage as MainPage
+import ConnectionPageIG
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
-import GLOBAL
+from GLOBAL import IDENTIFIANT
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
@@ -20,13 +22,24 @@ import GLOBAL
 ###############################
 ### DECLARATION DE FONCTION ###
 ###############################
+def OuvrirConnectionPage():
+    """
+    gere la connection
+    """
+    while True:
+        if IDENTIFIANT=="":
+            form = ConnectionPageIG.gui()
+            form.show()
+            form.exec_()
+        else:
+            break
 
 #################
 ### PROGRAMME ###
 #################
-class gui(QtWidgets.QDialog, MainPage.Ui_MainWindow):
+class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
     """
-    Demarre l'application par une page de connection
+    Page principale de l'application
     """
     ################
     # Constructeur #
@@ -37,11 +50,7 @@ class gui(QtWidgets.QDialog, MainPage.Ui_MainWindow):
         #customisation
         self.setWindowTitle("Page de Connection")
         self.labelErreur.hide()
-        while True:
-            if GLOBAL.IDENTIFIANT == "":
-                self.ActivationBouton(False)
-            else:
-                self.ActivationBouton(True)
+        OuvrirConnectionPage()
     
     ###########
     # METHODE #

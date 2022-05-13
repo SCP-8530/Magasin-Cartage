@@ -46,14 +46,14 @@ class Potion(Article):
         return self._effetPotion
     def _set_EffetPotion(self, p_EffetPotion):
         self._effetPotion = p_EffetPotion
-    EffetPotion = property(_get_EffetPotion(), _set_EffetPotion())    
+    EffetPotion = property(_get_EffetPotion, _set_EffetPotion)    
     
     def _get_DureePotion(self):
         return self._dureePotion
     def _set_DureePotion(self, p_DureePotion):
         if len(p_DureePotion) <= 17:
             self._dureePotion = p_DureePotion
-    DureePotion = property(_get_DureePotion(), _set_DureePotion())
+    DureePotion = property(_get_DureePotion, _set_DureePotion)
 
     #################
     # Autre Methode #

@@ -41,13 +41,13 @@ class Facture:
     def _set_Numero(self, p_Numero):
         if p_Numero.isnumeric == True:
             self._numero = p_Numero
-    Numero = property(_get_Numero(), _set_Numero())
+    Numero = property(_get_Numero, _set_Numero)
 
     def _get_Date(self):
         return self._date
     def _set_Date(self, p_Date):
         self._date = p_Date
-    Date = property(_get_Date(), _set_Date())
+    Date = property(_get_Date, _set_Date)
 
     #################
     # Autre Methode #

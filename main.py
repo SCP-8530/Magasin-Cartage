@@ -9,12 +9,9 @@
 ###################
 ### IMPORTATION ###
 ###################
-import ConnectionPageIG
 import MainIG
-import NewUserPageIG
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtCore import pyqtSlot
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
