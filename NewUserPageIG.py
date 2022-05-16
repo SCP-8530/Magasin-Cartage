@@ -9,6 +9,7 @@
 ###################
 ### IMPORTATION ###
 ###################
+from CLASSE import Client as C
 from INTERFACEGRAPHIQUE.PY import NewUserPage
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
@@ -35,14 +36,64 @@ class gui(QtWidgets.QDialog, NewUserPage.Ui_Dialog):
         self.setupUi(self)
         #customisation
         self.setWindowTitle("Creation de compte")
+        self.ResetErreur()
     
+    ###########
+    # Methode #
+    ###########
+    def ResetErreur(self):
+        """
+        Cache toute les erreurs
+        """
+        self.labelErreur1.hide()
+        self.labelErreur2.hide()
+        self.labelErreur3.hide()
+        self.labelErreur4.hide()
+        self.labelErreur5.hide()
+
     ##########
     # Bouton #
     ##########
     @pyqtSlot()
     def on_buttonNewUser_clicked(self):
         """
-        Connecte un utilisateur si il rentre le bon identifiant et MDP
+        Creer un nouvelle utilisateur
         """
-        self.close()
+        #reset les erreurs
+        self.ResetErreur()
+
+        #creer le nouveau compte
+        Client = C.Client()
+
+        Client.Prenom = self.lineEditPrenom.text()
+        Client.Identifiant = self.lineEditIdentifiant.text()
+        Client.MDP = self.lineEditMDP.text()
+        Client.Credit = self.lineEditCredits.text()
+
+        #verifie que tout es correct
+        ErreurDetecter = False
+
+        if Client.Prenom == "":
+            self.labelErreur1.show()
+            ErreurDetecter = True
+        if Client.Identifiant == "":
+            self.labelErreur2.show()
+            ErreurDetecter = True
+        if Client.MDP == "":
+            self.labelErreur3.show()
+            ErreurDetecter = True
+        if self.lineEditMDP.text() != self.lineEditMDPConfirmation.text():
+            self.labelErreur4.show()
+            ErreurDetecter = True
+        if Client.Credit == 0.00:
+            self.labelErreur5.show()
+            ErreurDetecter = True
+
+        #fermer la fenetre si aucune erreur est detecter et aussi sauvegarde le compte
+        if ErreurDetecter == False:
+            Client.Serialisation(New=True)
+            self.close()
+
+        
+        
     

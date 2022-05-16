@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>314</width>
-    <height>480</height>
+    <width>322</width>
+    <height>499</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -79,7 +79,7 @@
     </font>
    </property>
    <property name="text">
-    <string>Identifiant :</string>
+    <string>Identifiant : </string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEditIdentifiant">
@@ -182,8 +182,8 @@
   <widget class="QPushButton" name="buttonNewUser">
    <property name="geometry">
     <rect>
-     <x>92</x>
-     <y>440</y>
+     <x>90</x>
+     <y>460</y>
      <width>131</width>
      <height>31</height>
     </rect>
@@ -204,6 +204,86 @@
     <string>Créer le compte</string>
    </property>
   </widget>
+  <widget class="QLabel" name="labelErreur1">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>110</y>
+     <width>251</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>* prenom non valide</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelErreur2">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>190</y>
+     <width>251</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>* identifiant non valide</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelErreur3">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>270</y>
+     <width>251</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>* prenom non valide</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelErreur4">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>350</y>
+     <width>251</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>* mot de passe pas identique</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelErreur5">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>430</y>
+     <width>251</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: rgb(255, 0, 0);</string>
+   </property>
+   <property name="text">
+    <string>* valeur non valide</string>
+   </property>
+  </widget>
   <zorder>buttonNewUser</zorder>
   <zorder>labelTitle</zorder>
   <zorder>labelPrenom</zorder>
@@ -216,6 +296,11 @@
   <zorder>lineEditCredits</zorder>
   <zorder>labelMDPConfirmation</zorder>
   <zorder>labelCredit</zorder>
+  <zorder>labelErreur1</zorder>
+  <zorder>labelErreur2</zorder>
+  <zorder>labelErreur3</zorder>
+  <zorder>labelErreur4</zorder>
+  <zorder>labelErreur5</zorder>
  </widget>
  <resources/>
  <connections/>

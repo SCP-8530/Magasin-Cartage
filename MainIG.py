@@ -9,12 +9,13 @@
 ###################
 ### IMPORTATION ###
 ###################
+from re import I
 import sys
 import INTERFACEGRAPHIQUE.PY.MainPage as MainPage
 import ConnectionPageIG
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
-from GLOBAL import IDENTIFIANT
+from GLOBAL import IDENTIFIANT, INVENTAIRE
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
@@ -61,15 +62,33 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         self.buttonPayer.setEnabled(p_etat)
         self.buttonRetirer.setEnabled(p_etat)
 
+    def Filtrage(self):
+        #simplfication de valeur
+        filtre = self.comboBoxFiltre.currentText()
+        console = self.textBrowserInventaire
+
+        #reset de la liste des article
+        self.textBrowserInventaire.setText("")
+
+        #filtrage
+        for index in INVENTAIRE:
+            if filtre == "Tous type de produit": #pas de filtre
+                console.append(INVENTAIRE[index])
+            if filtre == INVENTAIRE[index].type: #il y a un filtre
+                console.append(INVENTAIRE[index])
+
+        
+
     ##########
     # Bouton #
     ##########
     @pyqtSlot()
-    def on_buttonConnection_clicked(self):
+    def on_buttonFiltre_clicked(self):
         """
-        Connecte un utilisateur si il rentre le bon identifiant et MDP
+        Gere le filtre des article afficher textBrowserInventaire de facon volontaire
         """
-        self.close()
+        self.Filtrage()
+        
     
     @pyqtSlot()
     def on_buttonNouveauCompte_clicked(self):

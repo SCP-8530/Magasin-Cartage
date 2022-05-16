@@ -25,11 +25,12 @@ class Article:
     """
     classe parent gerant les differents articles du magasins et des factures 
     """
-    def __init__(self, p_articleName = "", p_articleID = "", p_quantite = 0, p_prix = 0.00):
+    def __init__(self, p_articleName="", p_articleID="", p_quantite=0, p_prix=0.00, p_type=""):
         self._articleName = p_articleName
         self._articleID = p_articleID
         self._quantite = p_quantite
         self._prix = p_prix
+        self.Type = p_type
     
     ###########
     # GET/SET #

@@ -32,4 +32,5 @@ def Main():
 ### PROGRAMME ###
 #################
 if __name__ == "__main__":
+    #demarre l'application
     Main()

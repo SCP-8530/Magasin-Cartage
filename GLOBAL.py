@@ -15,3 +15,4 @@ from CLASSE import Client
 IDENTIFIANT = ""
 CLIENT = Client.Client()
 ADMIN = ["CR2429"]
+INVENTAIRE = []
