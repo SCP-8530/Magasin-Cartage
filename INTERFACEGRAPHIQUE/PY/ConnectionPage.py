@@ -48,7 +48,7 @@ class Ui_Dialog(object):
         self.lineEditMotDePasse.setGeometry(QtCore.QRect(70, 140, 201, 31))
         self.lineEditMotDePasse.setObjectName("lineEditMotDePasse")
         self.labelErreur = QtWidgets.QLabel(Dialog)
-        self.labelErreur.setGeometry(QtCore.QRect(10, 180, 341, 21))
+        self.labelErreur.setGeometry(QtCore.QRect(70, 180, 231, 21))
         self.labelErreur.setStyleSheet("color: rgb(255, 0, 0);")
         self.labelErreur.setObjectName("labelErreur")
 

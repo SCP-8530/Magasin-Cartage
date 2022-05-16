@@ -100,9 +100,9 @@
   <widget class="QLabel" name="labelErreur">
    <property name="geometry">
     <rect>
-     <x>10</x>
+     <x>70</x>
      <y>180</y>
-     <width>341</width>
+     <width>231</width>
      <height>21</height>
     </rect>
    </property>
