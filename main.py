@@ -9,6 +9,7 @@
 ###################
 ### IMPORTATION ###
 ###################
+from GLOBAL import *
 import MainIG
 import sys
 from PyQt5 import QtWidgets
@@ -31,6 +32,7 @@ def Main():
 #################
 ### PROGRAMME ###
 #################
+
+#Demarrage de l'application
 if __name__ == "__main__":
-    #demarre l'application
     Main()

@@ -11,6 +11,7 @@
 ###################
 from CLASSE import Client as C
 from INTERFACEGRAPHIQUE.PY import NewUserPage
+from GLOBAL import RACCOURCIS
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 ##########################################################
@@ -73,18 +74,27 @@ class gui(QtWidgets.QDialog, NewUserPage.Ui_Dialog):
         #verifie que tout es correct
         ErreurDetecter = False
 
-        if Client.Prenom == "":
+        ##nom pas valide
+        if Client.Prenom == "": 
             self.labelErreur1.show()
             ErreurDetecter = True
-        if Client.Identifiant == "":
+        ##identifant pas valide
+        if Client.Identifiant == "": 
             self.labelErreur2.show()
             ErreurDetecter = True
-        if Client.MDP == "":
+        ##identifant deja existant
+        if Client.Identifiant in RACCOURCIS(): 
+            self.labelErreur2.show()
+            ErreurDetecter = True
+        ##mot de pass non valide
+        if Client.MDP == "": 
             self.labelErreur3.show()
             ErreurDetecter = True
-        if self.lineEditMDP.text() != self.lineEditMDPConfirmation.text():
+        ##mot de passe pas identique
+        if self.lineEditMDP.text() != self.lineEditMDPConfirmation.text(): 
             self.labelErreur4.show()
             ErreurDetecter = True
+        ##credit non valide
         if Client.Credit == 0.00:
             self.labelErreur5.show()
             ErreurDetecter = True

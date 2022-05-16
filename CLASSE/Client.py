@@ -126,14 +126,14 @@ class Client:
         Creation d'un fichier pour serialiser le client
         """
         #creation du fichier
-        tf = open(f"DATACENTER/User/{self._identifiant}.txt","w")
+        tf = open(f"DATACENTER/User/{self._identifiant}.json","w")
         json.dump(self.__dict__(),tf,indent=4,sort_keys=True)
         tf.close()
         
         #ajout du raccourci si c'est un nouveau client qui vient d'etre creer
         if New == True:
             tf = open(f"DATACENTER/User/raccourci.txt", "a")
-            tf.write(f"{self._identifiant}\n")
+            tf.write(f"\n{self._identifiant}")
             tf.close()
 
     def Payer(self,p_Cout):

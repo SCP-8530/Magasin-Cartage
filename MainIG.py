@@ -9,13 +9,11 @@
 ###################
 ### IMPORTATION ###
 ###################
-from re import I
-import sys
 import INTERFACEGRAPHIQUE.PY.MainPage as MainPage
 import ConnectionPageIG
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
-from GLOBAL import IDENTIFIANT, INVENTAIRE
+from GLOBAL import Global
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
@@ -28,7 +26,7 @@ def OuvrirConnectionPage():
     gere la connection
     """
     while True:
-        if IDENTIFIANT=="":
+        if Global["ID"]==" ":
             form = ConnectionPageIG.gui()
             form.show()
             form.exec_()
@@ -71,11 +69,11 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         self.textBrowserInventaire.setText("")
 
         #filtrage
-        for index in INVENTAIRE:
+        for index in Global["INVENTAIRE"]:
             if filtre == "Tous type de produit": #pas de filtre
-                console.append(INVENTAIRE[index])
-            if filtre == INVENTAIRE[index].type: #il y a un filtre
-                console.append(INVENTAIRE[index])
+                console.append(Global["INVENTAIRE"][index])
+            if filtre == Global["INVENTAIRE"][index].type: #il y a un filtre
+                console.append(Global["INVENTAIRE"][index])
 
         
 

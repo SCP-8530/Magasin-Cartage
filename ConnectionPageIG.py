@@ -9,6 +9,7 @@
 ###################
 ### IMPORTATION ###
 ###################
+from GLOBAL import Global, RACCOURCIS, fCLIENT
 import INTERFACEGRAPHIQUE.PY.ConnectionPage as ConnectionPage
 import NewUserPageIG
 from PyQt5 import QtWidgets
@@ -36,6 +37,7 @@ class gui(QtWidgets.QDialog, ConnectionPage.Ui_Dialog):
         self.setupUi(self)
         #customisation
         self.setWindowTitle("Page de Connection")
+        self.labelErreur.hide()
     
     ##########
     # Bouton #
@@ -45,13 +47,39 @@ class gui(QtWidgets.QDialog, ConnectionPage.Ui_Dialog):
         """
         Connecte un utilisateur si il rentre le bon identifiant et MDP
         """
-        self.close()
+        #reset erreur
+        self.labelErreur.hide()
+
+        #receperation des donnees
+        LoginIdentifiant = self.lineEditIdentifiant.text()
+        LoginMDP = self.lineEditMotDePasse.text()
+
+        #tester la connection
+        if RACCOURCIS().count(LoginIdentifiant) == 0:
+            #identifiant n'existant pas
+            self.lineEditIdentifiant.setText("")
+            self.lineEditMotDePasse.setText("")
+            self.labelErreur.show()
+        else:
+            fCLIENT(LoginIdentifiant)
+            if Global["CLIENT"].MDP == LoginMDP:
+                #identifiaction correct
+                Global["ID"] = LoginIdentifiant
+                self.close()
+            else:
+                #mauvaise mot de passe
+                self.lineEditMotDePasse.setText("")
+                self.labelErreur.show()
+
     
     @pyqtSlot()
     def on_buttonNouveauCompte_clicked(self):
         """
         Ouvre la page de creation d'un nouvelle utilisateur
         """
+        #reset erreur
+        self.labelErreur.hide()
+
         form = NewUserPageIG.gui()
         form.show()
         form.exec_()
