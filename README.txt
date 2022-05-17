@@ -27,6 +27,17 @@ Dans Client:
 Dans Client
     Supretion de l'attribut numeroClient #Utilisation de identifiant comme "numero"
 
+---Date:17/05/2022---
+Dans Article
+	Ajout de l'attribut Type
+	Ajout de la methode Serialiser
 
-test
+Dans Potion
+	Ajout de la methode dict
+
+Dans Sortillege
+	Ajout de la methode dict
+
+Dans PierreMagique
+	Ajout de la methode dict
 

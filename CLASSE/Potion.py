@@ -9,7 +9,7 @@
 ###################
 ### IMPORTATION ###
 ###################
-from Article import Article
+from CLASSE.Article import Article
 
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
@@ -35,7 +35,7 @@ class Potion(Article):
             p_effetPotion = "",
             p_dureePotion = ""
             ):
-        Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix)
+        Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix,"Potion")
         self._effetPotion = p_effetPotion
         self._dureePotion = p_dureePotion
     
@@ -96,3 +96,16 @@ class Potion(Article):
 
         #return
         return strChaine
+
+    def __dict__(self): 
+        Dictio = {
+            "Nom": self._articleName,
+            "ArticleID": self._articleID,
+            "Quantite":self._quantite,
+            "Prix": self._prix,
+            "Type": self.Type,
+            "Effet Potion": self._effetPotion,
+            "Duree Potion": self._dureePotion
+        }
+
+        return Dictio

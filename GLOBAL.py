@@ -14,7 +14,7 @@ import json
 
 Global = {"ID" : "",
     "CLIENT" : Client.Client(),
-    "ADMIN" : ["CR2429"],
+    "ADMIN" : ["CR2429","FC2000"],
     "INVENTAIRE" : [],
     "FACTURE" : []
     }

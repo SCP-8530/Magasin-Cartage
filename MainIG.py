@@ -9,15 +9,28 @@
 ###################
 ### IMPORTATION ###
 ###################
-import INTERFACEGRAPHIQUE.PY.MainPage as MainPage
-import ConnectionPageIG
+#module python
+import json
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
+
+#interface garphique
+import INTERFACEGRAPHIQUE.PY.MainPage as MainPage
+import ConnectionPageIG
+import AdminIG
+
+#article
+from CLASSE.Potion import Potion
+from CLASSE.PierreMagique import PierreMagique
+from CLASSE.Sortillege import Sortillege
+
+#autre
+from CLASSE.Facture import Facture
 from GLOBAL import Global
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
-
+Panier = Facture()
 ###############################
 ### DECLARATION DE FONCTION ###
 ###############################
@@ -33,17 +46,83 @@ def OuvrirConnectionPage():
         else:
             break
 
-def Produit(p_ID):
+def MAJInventaire():
     """
-    Instensie un article
+    recupere tout les produit creer pour les mettre dans l'inventaire
     """
-    tf = open(f"DATACENTER/Article/{p_ID}.json", "r")
-    user = Cli
+    #recupere la liste des ID
+    tf = open("DATACENTER/Article/raccourci.txt","r")
+    LstArticleID = tf.read().splitlines()
+    tf.close
+
+    #instancier les different article dans l'inventaire
+    for index in LstArticleID:
+        #recupere la sauvegarde de l'article
+        tf = open(f"DATACENTER/Article/{index}.json")
+        ArticleSave = json.load(tf, object_hook=dict)
+        tf.close()
+
+        #instencie l'objet
+        ##potion
+        if ArticleSave["Type"] == "Potion":
+            Art = Potion()
+            Art.ArticleName = ArticleSave["Nom"]
+            Art.ArticleID = ArticleSave["ArticleID"]
+            Art.Quantite = ArticleSave["Quantite"]
+            Art.Prix = ArticleSave["Prix"]
+            Art.EffetPotion = ArticleSave["Effet Potion"]
+            Art.DureePotion = ArticleSave["Duree Potion"]
+
+            #mettre dans l'inventaire
+            Global["INVENTAIRE"].append(Art)
+        ##sortillege
+        elif ArticleSave["Type"] == "Sortillege":
+            Art = Sortillege()
+            Art.ArticleName = ArticleSave["Nom"]
+            Art.ArticleID = ArticleSave["ArticleID"]
+            Art.Quantite = ArticleSave["Quantite"]
+            Art.Prix = ArticleSave["Prix"]
+            Art.EffetSortillege = ArticleSave["Effet Sortillege"]
+            Art.EnergieNecessaire = ArticleSave["Energie Necessaire"]
+            Art.SacrificeNecessaire = ArticleSave["Sacrifice Necessaire"]
+
+            #mettre dans l'inventaire
+            Global["INVENTAIRE"].append(Art)
+        ##pierre magique
+        elif ArticleSave["Type"] == "PierreMagique":
+            Art = PierreMagique()
+            Art.ArticleName = ArticleSave["Nom"]
+            Art.ArticleID = ArticleSave["ArticleID"]
+            Art.Quantite = ArticleSave["Quantite"]
+            Art.Prix = ArticleSave["Prix"]
+            Art.EnergiePierre = ArticleSave["Energie Pierre"]
+
+            #mettre dans l'inventaire
+            Global["INVENTAIRE"].append(Art)
+
+def ProduitSelect(p_ID) -> object:
+    """
+    recupere un produit dans l'inventaire
+    """
+    for index in Global["INVENTAIRE"]:
+        if index.ArticleID == p_ID:
+            return index
+
+def IndexInventaire(p_ID) -> int:
+    """
+    Recuperer l'index ou se trouve un article dans l'inventaire
+    """
+    for index in range(0,len(Global["INVENTAIRE"]),1):
+        if Global["INVENTAIRE"].ArticleID == p_ID:
+            return index
 
 def OuvrirAdminIG():
     """
     Gere l'ouverture de la page admin
     """
+    form = AdminIG.gui()
+    form.show()
+    form.exec_()
 
 #################
 ### PROGRAMME ###
@@ -62,15 +141,16 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         self.setWindowTitle("Page de Connection")
         self.labelErreur.hide()
         OuvrirConnectionPage()
+        MAJInventaire()
     
     ###########
     # METHODE #
     ###########
-    def ActivationBouton(self,p_etat):
-        self.buttonAjouter.setEnabled(p_etat)
-        self.buttonFacture.setEnabled(p_etat)
-        self.buttonPayer.setEnabled(p_etat)
-        self.buttonRetirer.setEnabled(p_etat)
+    def MAJPanier(self):
+        """
+        Update le Panier
+        """
+        self.textBrowserPanier.setText(Panier.__str__())
 
     def Filtrage(self):
         #simplfication de valeur
@@ -97,10 +177,12 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
             le.setText("* L'ID n'existe pas")
         if p_code == 2:
             le.setText("* La quantite n'est pas valide")
+        if p_code == 3:
+            le.setText("* La quantite est trop élevé")
+
     ####################
     # Bouton et Combox #
     ####################
-    @pyqtSlot()
     def on_comboBoxFiltre_changed(self):
         """
         Gere le filtre des article afficher textBrowserInventaire de facon volontaire
@@ -119,11 +201,11 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         self.labelErreur.hide()
 
         #recuperer les informations
-        IdProduit : self.lineEditID.text()
-        QuantiterProduit : self.lineEditQuantite.text()
+        IdProduit = self.lineEditID.text()
+        QuantiterProduit = self.lineEditQuantite.text()
 
         #ouvre la page admin
-        if IdProduit and QuantiterProduit == "Admin":
+        if IdProduit == "Admin" and QuantiterProduit == "Admin":
             if Global["ADMIN"].count(Global["ID"]) == 1:
                 OuvrirAdminIG()
         else: #ajoute un produit au panier
@@ -137,4 +219,20 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
             elif int(QuantiterProduit) <= 0:
                 self.Erreur(2)
             #la quantiter est trop elever
-            elif int(QuantiterProduit) > Produit(IdProduit):
+            elif int(QuantiterProduit) > ProduitSelect(IdProduit).Quantite:
+                self.Erreur(3)
+            #aucune erreur
+            else:
+                #configuere les objets
+                ProduitInventaire = Global["INVENTAIRE"][IndexInventaire(IdProduit)]
+                ProduitPanier = ProduitInventaire
+                ProduitPanier.Quantite = QuantiterProduit
+
+                #deplacer de l'invantaire au panier
+                ProduitInventaire.Quantite -= QuantiterProduit
+                Panier.LstArticle.append(ProduitPanier)
+
+                #mettre a jour les interfaces
+                MAJInventaire()
+                self.Filtrage()
+                self.MAJPanier()

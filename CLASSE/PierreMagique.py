@@ -9,7 +9,7 @@
 ###################
 ### IMPORTATION ###
 ###################
-from Article import Article
+from CLASSE.Article import Article
 
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
@@ -34,7 +34,7 @@ class PierreMagique(Article):
             p_prix = 0.00,
             p_energiePierre = ""
             ):
-        Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix)
+        Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix,"PierreMagique")
         self._energiePierre = p_energiePierre
     
     ###########
@@ -65,3 +65,15 @@ class PierreMagique(Article):
 
         #return
         return strChaine
+    
+    def __dict__(self): 
+        Dictio = {
+            "Nom": self._articleName,
+            "ArticleID": self._articleID,
+            "Quantite":self._quantite,
+            "Prix": self._prix,
+            "Type": self.Type,
+            "Energie Pierre": self._energiePierre
+        }
+
+        return Dictio

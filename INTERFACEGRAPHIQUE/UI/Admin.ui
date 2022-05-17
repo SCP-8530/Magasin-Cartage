@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>768</width>
-    <height>755</height>
+    <width>894</width>
+    <height>620</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,12 +18,12 @@
     <rect>
      <x>20</x>
      <y>50</y>
-     <width>351</width>
-     <height>311</height>
+     <width>391</width>
+     <height>541</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="labelLstArticle">
+  <widget class="QLabel" name="labelTitle">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -42,70 +42,12 @@
     <string>Liste des Articles :</string>
    </property>
   </widget>
-  <widget class="QLabel" name="labelLstFacture">
-   <property name="geometry">
-    <rect>
-     <x>390</x>
-     <y>10</y>
-     <width>351</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Comic Sans MS</family>
-     <pointsize>15</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Liste des Factures :</string>
-   </property>
-  </widget>
-  <widget class="QTextBrowser" name="textBrowserLstFacture">
-   <property name="geometry">
-    <rect>
-     <x>390</x>
-     <y>50</y>
-     <width>351</width>
-     <height>311</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QTextBrowser" name="textBrowserLstUser">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>420</y>
-     <width>351</width>
-     <height>311</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="labelLstUser">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>380</y>
-     <width>351</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <family>Comic Sans MS</family>
-     <pointsize>15</pointsize>
-    </font>
-   </property>
-   <property name="text">
-    <string>Liste des Utilisateurs :</string>
-   </property>
-  </widget>
   <widget class="QLabel" name="labelID">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>450</y>
-     <width>151</width>
+     <x>440</x>
+     <y>80</y>
+     <width>241</width>
      <height>31</height>
     </rect>
    </property>
@@ -116,15 +58,15 @@
     </font>
    </property>
    <property name="text">
-    <string>Code ID:</string>
+    <string>ID de l'objet à affecter:</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelType">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>400</y>
-     <width>151</width>
+     <x>440</x>
+     <y>30</y>
+     <width>251</width>
      <height>31</height>
     </rect>
    </property>
@@ -135,14 +77,14 @@
     </font>
    </property>
    <property name="text">
-    <string>Type de l'objet:</string>
+    <string>Type d'object à afficher:</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineEditID">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>450</y>
+     <x>690</x>
+     <y>80</y>
      <width>181</width>
      <height>31</height>
     </rect>
@@ -151,8 +93,8 @@
   <widget class="QComboBox" name="comboBoxType">
    <property name="geometry">
     <rect>
-     <x>560</x>
-     <y>400</y>
+     <x>690</x>
+     <y>30</y>
      <width>181</width>
      <height>31</height>
     </rect>
@@ -176,8 +118,8 @@
   <widget class="QLabel" name="labelErreur">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>490</y>
+     <x>590</x>
+     <y>460</y>
      <width>341</width>
      <height>21</height>
     </rect>
@@ -199,8 +141,8 @@
   <widget class="QPushButton" name="buttonAjouter">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>530</y>
+     <x>430</x>
+     <y>160</y>
      <width>93</width>
      <height>28</height>
     </rect>

@@ -9,7 +9,7 @@
 ###################
 ### IMPORTATION ###
 ###################
-from Client import Client
+from CLASSE.Client import Client
 import json
 
 ##########################################################
@@ -39,8 +39,7 @@ class Facture:
     def _get_Numero(self):
         return self._numero
     def _set_Numero(self, p_Numero):
-        if p_Numero.isnumeric == True:
-            self._numero = p_Numero
+        self._numero = p_Numero
     Numero = property(_get_Numero, _set_Numero)
 
     def _get_Date(self):
@@ -134,3 +133,5 @@ class Facture:
         tf = open(f"DATACENTER/Factures/raccourci.txt", "a")
         tf.write(f"{self._numero}\n")
         tf.close()
+
+        #ajouter la facture dans les donne du client

@@ -9,7 +9,7 @@
 ###################
 ### IMPORTATION ###
 ###################
-from Article import Article
+from CLASSE.Article import Article
 
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
@@ -22,7 +22,7 @@ from Article import Article
 #################
 ### PROGRAMME ###
 #################
-class Potion(Article):
+class Sortillege(Article):
     """
     classe enfant de la classe Article
     """
@@ -36,7 +36,7 @@ class Potion(Article):
             p_energieNecessaire = "",
             p_sacrificeNecessaire = ""
             ):
-        Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix)
+        Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix,"Sortillege")
         self._effetSortillege = p_effetSortillege
         self._energieNecessaire = p_energieNecessaire
         self._sacrificeNecessaire = p_sacrificeNecessaire
@@ -126,3 +126,17 @@ class Potion(Article):
 
         #return
         return strChaine
+
+    def __dict__(self): 
+        Dictio = {
+            "Nom": self._articleName,
+            "ArticleID": self._articleID,
+            "Quantite":self._quantite,
+            "Prix": self._prix,
+            "Type": self.Type,
+            "Effet Sortillege": self._effetSortillege,
+            "Energie Necessaire": self._energieNecessaire,
+            "Sacrifice Necessaire": self._sacrificeNecessaire
+        }
+
+        return Dictio

@@ -9,6 +9,7 @@
 ###################
 ### IMPORTATION ###
 ###################
+import json
 
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
@@ -82,3 +83,11 @@ class Article:
         strChaine += f"\n* Prix a l'unité: {self._prix}"
         strChaine += f"\n* Prix de l'ensemble: {self.PrixTotal()}"
         strChaine += f"\n"+"*"*25
+
+    def Serialiser(self,p_dict):
+        """
+        Gere la serialisation des articles
+        """
+        tf = open(f"DATACENTER/Article/{self._articleID}.json","w")
+        json.dump(p_dict,tf,indent=4,sort_keys=True)
+        tf.close
