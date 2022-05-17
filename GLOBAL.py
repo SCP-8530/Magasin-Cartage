@@ -12,7 +12,7 @@
 from CLASSE import Client
 import json
 
-Global = {"ID" : " ",
+Global = {"ID" : "",
     "CLIENT" : Client.Client(),
     "ADMIN" : ["CR2429"],
     "INVENTAIRE" : [],

@@ -221,7 +221,7 @@
      </font>
     </property>
     <property name="text">
-     <string>Type de produit :</string>
+     <string>Filtre de produit :</string>
     </property>
    </widget>
    <widget class="QComboBox" name="comboBoxFiltre">
@@ -229,7 +229,7 @@
      <rect>
       <x>450</x>
       <y>60</y>
-      <width>201</width>
+      <width>321</width>
       <height>31</height>
      </rect>
     </property>
@@ -254,19 +254,6 @@
      </property>
     </item>
    </widget>
-   <widget class="QPushButton" name="buttonFiltre">
-    <property name="geometry">
-     <rect>
-      <x>660</x>
-      <y>60</y>
-      <width>111</width>
-      <height>31</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Filtrer</string>
-    </property>
-   </widget>
    <zorder>labelQuantite</zorder>
    <zorder>textBrowserInventaire</zorder>
    <zorder>labelTitre</zorder>
@@ -282,7 +269,6 @@
    <zorder>buttonFacture</zorder>
    <zorder>labelFiltre</zorder>
    <zorder>comboBoxFiltre</zorder>
-   <zorder>buttonFiltre</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
