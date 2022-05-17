@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QTextBrowser" name="textBrowserLstArticle">
+  <widget class="QTextBrowser" name="textBrowserObjet">
    <property name="geometry">
     <rect>
      <x>20</x>
@@ -45,9 +45,9 @@
   <widget class="QLabel" name="labelID">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>430</x>
      <y>80</y>
-     <width>241</width>
+     <width>251</width>
      <height>31</height>
     </rect>
    </property>
@@ -64,9 +64,9 @@
   <widget class="QLabel" name="labelType">
    <property name="geometry">
     <rect>
-     <x>440</x>
+     <x>430</x>
      <y>30</y>
-     <width>251</width>
+     <width>261</width>
      <height>31</height>
     </rect>
    </property>
@@ -89,6 +89,11 @@
      <height>31</height>
     </rect>
    </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
   </widget>
   <widget class="QComboBox" name="comboBoxType">
    <property name="geometry">
@@ -98,6 +103,11 @@
      <width>181</width>
      <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
    </property>
    <item>
     <property name="text">
@@ -118,9 +128,9 @@
   <widget class="QLabel" name="labelErreur">
    <property name="geometry">
     <rect>
-     <x>590</x>
-     <y>460</y>
-     <width>341</width>
+     <x>430</x>
+     <y>130</y>
+     <width>441</width>
      <height>21</height>
     </rect>
    </property>
@@ -142,14 +152,278 @@
    <property name="geometry">
     <rect>
      <x>430</x>
-     <y>160</y>
-     <width>93</width>
-     <height>28</height>
+     <y>180</y>
+     <width>141</width>
+     <height>31</height>
     </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="text">
     <string>Ajouter</string>
    </property>
+  </widget>
+  <widget class="QPushButton" name="buttonSupprimer">
+   <property name="geometry">
+    <rect>
+     <x>730</x>
+     <y>180</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Supprimer</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonModifier">
+   <property name="geometry">
+    <rect>
+     <x>580</x>
+     <y>180</y>
+     <width>141</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Modifier</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label1">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>240</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Comic Sans MS</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Nom:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit1">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>240</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label2">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>280</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Comic Sans MS</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Label 2</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit2">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>280</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label3">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>320</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Comic Sans MS</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Label 3</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit3">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>320</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label4">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>360</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Comic Sans MS</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Type:</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="lineEdit5">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>400</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit6">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>440</y>
+     <width>221</width>
+     <height>61</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label5">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>400</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Comic Sans MS</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Label 5</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label6">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>440</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Comic Sans MS</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Label 6</string>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="textEdit7">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>510</y>
+     <width>221</width>
+     <height>61</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label7">
+   <property name="geometry">
+    <rect>
+     <x>430</x>
+     <y>510</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Comic Sans MS</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>Sacrifice Necessaire:</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox4">
+   <property name="geometry">
+    <rect>
+     <x>650</x>
+     <y>360</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <item>
+    <property name="text">
+     <string>Pierre Magique</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Potion</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Sortillege</string>
+    </property>
+   </item>
   </widget>
  </widget>
  <resources/>

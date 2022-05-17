@@ -10,7 +10,6 @@
 ### IMPORTATION ###
 ###################
 import json
-from operator import truediv
 
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###

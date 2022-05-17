@@ -187,8 +187,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         """
         Gere le filtre des article afficher textBrowserInventaire de facon volontaire
         """
-        self.Filtrage()
-        
+        self.Filtrage()   
     
     @pyqtSlot()
     def on_buttonAjouter_clicked(self):
