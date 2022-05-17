@@ -37,6 +37,8 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
         #customisation
         self.setWindowTitle("Page de Connection")
         self.labelErreur.hide()
+        self.HideLabel
+        self.LabelVisibiliterPrime()
         
     
     ###########
@@ -77,22 +79,22 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
         self.HideLabel() 
         if EntryCB == "Article":
             #activation des boutons
-            self.buttonAjouter.setEnabled()
-            self.buttonModifier.setEnabled()
-            self.buttonSupprimer.setEnabled()
+            self.buttonAjouter.setEnabled(True)
+            self.buttonModifier.setEnabled(True)
+            self.buttonSupprimer.setEnabled(True)
 
             #Activation des labels en dessous
             self.LabelVisibiliterArticle()
         elif EntryCB == "Utilisateur":
             #activation des boutons
-            self.buttonAjouter.setDisabled()
-            self.buttonModifier.setDisabled()
-            self.buttonSupprimer.setEnabled()
+            self.buttonAjouter.setDisabled(True)
+            self.buttonModifier.setDisabled(True)
+            self.buttonSupprimer.setEnabled(True)
         else:
             #activation des boutons
-            self.buttonAjouter.setDisabled()
-            self.buttonModifier.setDisabled()
-            self.buttonSupprimer.setDisabled()
+            self.buttonAjouter.setDisabled(True)
+            self.buttonModifier.setDisabled(True)
+            self.buttonSupprimer.setDisabled(True)
         
     def LabelVisibiliterArticle(self):
         """
@@ -151,13 +153,13 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
     ######################
     # Bouton et ComboBox #
     ######################
-    def on_comboBoxType_changed(self):
+    def on_comboBoxType_currentTextChanged(self):
         """
         Change le type d'object afficher et affecter par les boutons
         """
         self.LabelVisibiliterPrime()
-        
-    def on_comboBox4_changed(self):
+ 
+    def on_comboBox4_currentTextChanged(self):
         """
         Changer les objets des articles
         """

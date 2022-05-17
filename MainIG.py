@@ -183,6 +183,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
     ####################
     # Bouton et Combox #
     ####################
+    @pyqtSlot()
     def on_comboBoxFiltre_changed(self):
         """
         Gere le filtre des article afficher textBrowserInventaire de facon volontaire
