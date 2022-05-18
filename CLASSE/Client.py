@@ -110,13 +110,13 @@ class Client:
         """
         Creation d'un string
         """
-        StrChaine = "**********"
-        StrChaine +=f"* Prenom: {self._prenom}"
-        StrChaine +=f"* Identifiant: {self._identifiant}"
-        StrChaine +=f"* MDP: {self._mdp}"
-        StrChaine +=f"* Credit: {self._credit}"
-        StrChaine +=f"* LstFacture: {self.LstFacture}"
-        StrChaine += "**********"
+        StrChaine = f"\n**********"
+        StrChaine +=f"\n* Prenom: {self._prenom}"
+        StrChaine +=f"\n* Identifiant: {self._identifiant}"
+        StrChaine +=f"\n* MDP: {self._mdp}"
+        StrChaine +=f"\n* Credit: {self._credit}"
+        StrChaine +=f"\n* LstFacture: {self.LstFacture}"
+        StrChaine += "\n**********"
 
         return StrChaine
 

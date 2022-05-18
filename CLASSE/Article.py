@@ -60,7 +60,7 @@ class Article:
     def _get_Prix(self):
         return self._prix
     def _set_Prix(self, p_Prix):
-        if p_Prix.isdecimal() == True:
+        if p_Prix.isdecimal() == True or p_Prix.isnumeric == True:
             if float(p_Prix) > 0:
                 self._prix = float(p_Prix)
     Prix = property(_get_Prix,_set_Prix)
