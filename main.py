@@ -55,8 +55,8 @@ def MAJInventaire():
             Art = Potion.Potion()
             Art.ArticleName = ArticleSave["Nom"]
             Art.ArticleID = ArticleSave["ArticleID"]
-            Art.Quantite = ArticleSave["Quantite"]
-            Art.Prix = ArticleSave["Prix"]
+            Art.Quantite = str(ArticleSave["Quantite"])
+            Art.Prix = str(ArticleSave["Prix"])
             Art.EffetPotion = ArticleSave["Effet Potion"]
             Art.DureePotion = ArticleSave["Duree Potion"]
 
@@ -67,8 +67,8 @@ def MAJInventaire():
             Art = Sortillege.Sortillege()
             Art.ArticleName = ArticleSave["Nom"]
             Art.ArticleID = ArticleSave["ArticleID"]
-            Art.Quantite = ArticleSave["Quantite"]
-            Art.Prix = ArticleSave["Prix"]
+            Art.Quantite = str(ArticleSave["Quantite"])
+            Art.Prix = str(ArticleSave["Prix"])
             Art.EffetSortillege = ArticleSave["Effet Sortillege"]
             Art.EnergieNecessaire = ArticleSave["Energie Necessaire"]
             Art.SacrificeNecessaire = ArticleSave["Sacrifice Necessaire"]
@@ -76,12 +76,12 @@ def MAJInventaire():
             #mettre dans l'inventaire
             Global["INVENTAIRE"].append(Art)
         ##pierre magique
-        elif ArticleSave["Type"] == "PierreMagique":
+        elif ArticleSave["Type"] == "Pierre Magique":
             Art = PierreMagique.PierreMagique()
             Art.ArticleName = ArticleSave["Nom"]
             Art.ArticleID = ArticleSave["ArticleID"]
-            Art.Quantite = ArticleSave["Quantite"]
-            Art.Prix = ArticleSave["Prix"]
+            Art.Quantite = str(ArticleSave["Quantite"])
+            Art.Prix = str(ArticleSave["Prix"])
             Art.EnergiePierre = ArticleSave["Energie Pierre"]
 
             #mettre dans l'inventaire

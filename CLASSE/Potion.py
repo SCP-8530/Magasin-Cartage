@@ -89,9 +89,8 @@ class Potion(Article):
         strChaine += f"\n║{'Durée: '+self._dureePotion:<25}║"
         strChaine += f"\n╠{'═'*25}╣"
         strChaine += f"\n║{'ID: '+self._articleID:<25}║"
-        strChaine += f"\n║{'Quantite: '+self._quantite:<25}║"
-        strChaine += f"\n║{'Prix: '+self._prix+'φ/unité':<25}║"
-        strChaine += f"\n║{'Prix total: '+self.PrixTotal()+'φ':<25}║"
+        strChaine += f"\n║{'Quantite: '+str(self._quantite):<25}║"
+        strChaine += f"\n║{'Prix: '+str(self._prix)+'φ/unité':<25}║"
         strChaine += f"\n╚{'═'*25}╝"
 
         #return

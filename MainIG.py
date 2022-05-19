@@ -83,6 +83,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         self.labelErreur.hide()
         OuvrirConnectionPage()
         MAJInventaire()
+        self.Filtrage()
     
     ###########
     # METHODE #
@@ -99,14 +100,14 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         console = self.textBrowserInventaire
 
         #reset de la liste des article
-        self.textBrowserInventaire.setText("")
+        console.setText("")
 
         #filtrage
         for index in Global["INVENTAIRE"]:
             if filtre == "Tous type de produit": #pas de filtre
-                console.append(Global["INVENTAIRE"][index])
-            if filtre == Global["INVENTAIRE"][index].type: #il y a un filtre
-                console.append(Global["INVENTAIRE"][index])
+                console.append(str(index))
+            if filtre == index.Type: #il y a un filtre
+                console.append(str(index))
 
     def Erreur(self,p_code):
         """
@@ -124,8 +125,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
     ####################
     # Bouton et Combox #
     ####################
-    @pyqtSlot()
-    def on_comboBoxFiltre_changed(self):
+    def on_comboBoxFiltre_currentTextChanged(self):
         """
         Gere le filtre des article afficher textBrowserInventaire de facon volontaire
         """
@@ -174,6 +174,5 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
                 Panier.LstArticle.append(ProduitPanier)
 
                 #mettre a jour les interfaces
-                MAJInventaire()
                 self.Filtrage()
                 self.MAJPanier()
