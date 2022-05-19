@@ -25,6 +25,13 @@ from CLASSE.Article import Article
 class Potion(Article):
     """
     classe enfant de la classe Article
+    
+    :param p_articleName: str
+    :param p_articleID: str
+    :param p_quantite: int
+    :param p_prix: float
+    :param p_effetPotion: str
+    :param p_dureePotion: str
     """
     def __init__(
             self,
@@ -58,7 +65,7 @@ class Potion(Article):
     #################
     # Autre Methode #
     #################
-    def __str__(self):
+    def __str__(self) -> str:
         # separation de la description en plusieur lignes de 25 caractere
         lstDescription = self._effetPotion.split()
         # calcule de ligne de 25 caractere
@@ -96,7 +103,7 @@ class Potion(Article):
         #return
         return strChaine
 
-    def __dict__(self): 
+    def __dict__(self) -> dict: 
         Dictio = {
             "Nom": self._articleName,
             "ArticleID": self._articleID,

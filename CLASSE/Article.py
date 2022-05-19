@@ -26,7 +26,13 @@ from re import T
 #################
 class Article:
     """
-    classe parent gerant les differents articles du magasins et des factures 
+    classe parent gerant les differents articles du magasins et des factures
+
+    :param p_articleName: str
+    :param p_articleID: str
+    :param p_quantite: int
+    :param p_prix: float
+    :param p_type: str 
     """
     def __init__(self, p_articleName="", p_articleID="", p_quantite=0, p_prix=0.00, p_type=""):
         self._articleName = p_articleName
@@ -73,14 +79,14 @@ class Article:
     #################
     # Autre Methode #
     #################
-    def PrixTotal(self):
+    def PrixTotal(self) -> float:
         """
         Calcule prix total a debourser celon cela la quantiter de que l'on a
         """
-        intPrix = self._prix * self._quantite
-        return intPrix
+        fltPrix = self._prix * self._quantite
+        return fltPrix
 
-    def __str__(self):
+    def __str__(self) -> str:
         strChaine = "*"*25
         strChaine += f"\n* Nom de l'article: {self._articleName}"
         strChaine += f"\n* Numero de l'article: {self._articleID}"
@@ -89,9 +95,12 @@ class Article:
         strChaine += f"\n* Prix de l'ensemble: {self.PrixTotal()}"
         strChaine += f"\n"+"*"*25
 
-    def Serialiser(self,p_dict,New=False):
+    def Serialiser(self,p_dict={},New=False) -> None:
         """
         Gere la serialisation des articles
+
+        :param p_dict: dict
+        :param New: bool
         """
         #serialisation
         tf = open(f"DATACENTER/Article/{self._articleID}.json","w")

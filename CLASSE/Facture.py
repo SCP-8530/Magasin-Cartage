@@ -26,6 +26,11 @@ import json
 class Facture:
     """
     Classe qui gere les factures des differents clients
+
+    :param p_numero: str
+    :param p_date: str
+    :param p_LstArticle: lst
+    :param p_Client: object
     """
     def __init__(self,p_numero = "", p_date = "", p_LstArticle = [], p_Client = Client()):
         self._numero = p_numero
@@ -90,7 +95,7 @@ class Facture:
 
         return DictSave
 
-    def PrixTotal(self):
+    def PrixTotal(self) -> float:
         """
         Calculer le cout total de la facture
         """
@@ -105,7 +110,7 @@ class Facture:
         #envoie de la valeur
         return fltPrixTotal
 
-    def PayerFacture(self):
+    def PayerFacture(self) -> bool:
         """
         Assure le payement de la facture
         """
@@ -120,7 +125,7 @@ class Facture:
             self.Serialisation()
             return True
         
-    def Serialisation(self):
+    def Serialisation(self) -> None:
         """
         Creation d'un fichier pour serialiser la facture lorsqu'elle est payer
         """

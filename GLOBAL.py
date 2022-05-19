@@ -12,14 +12,15 @@
 from CLASSE import Client
 import json
 
-Global = {"ID" : "",
+Global = {
+    "ID" : "",
     "CLIENT" : Client.Client(),
     "ADMIN" : ["CR2429","FC2000"],
     "INVENTAIRE" : [],
     "FACTURE" : []
     }
 
-def RACCOURCIS():
+def RACCOURCIS() -> list:
     """
     Prepare la liste de tout les identifiant sauvegarder
     """
@@ -29,9 +30,11 @@ def RACCOURCIS():
 
     return r
 
-def fCLIENT(p_identifiant):
+def fCLIENT(p_identifiant="") -> None:
     """
     generer un client sauvegarder
+
+    :param p_identifiant: str
     """
     #recuperer la sauvegarde
     tf = open(f"DATACENTER/User/{p_identifiant}.json")

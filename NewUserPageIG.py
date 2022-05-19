@@ -42,7 +42,7 @@ class gui(QtWidgets.QDialog, NewUserPage.Ui_Dialog):
     ###########
     # Methode #
     ###########
-    def ResetErreur(self):
+    def ResetErreur(self) -> None:
         """
         Cache toute les erreurs
         """

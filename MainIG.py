@@ -29,7 +29,7 @@ Panier = Facture()
 ###############################
 ### DECLARATION DE FONCTION ###
 ###############################
-def OuvrirConnectionPage():
+def OuvrirConnectionPage() -> None:
     """
     gere la connection
     """
@@ -41,23 +41,27 @@ def OuvrirConnectionPage():
         else:
             break
 
-def ProduitSelect(p_ID) -> object:
+def ProduitSelect(p_ID="") -> object:
     """
     recupere un produit dans l'inventaire
+
+    :param p_ID: str
     """
     for index in Global["INVENTAIRE"]:
         if index.ArticleID == p_ID:
             return index
 
-def IndexInventaire(p_ID) -> int:
+def IndexInventaire(p_ID="") -> int:
     """
     Recuperer l'index ou se trouve un article dans l'inventaire
+
+    :param p_ID: str
     """
     for index in range(0,len(Global["INVENTAIRE"]),1):
         if Global["INVENTAIRE"].ArticleID == p_ID:
             return index
 
-def OuvrirAdminIG():
+def OuvrirAdminIG() -> None:
     """
     Gere l'ouverture de la page admin
     """
@@ -88,13 +92,13 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
     ###########
     # METHODE #
     ###########
-    def MAJPanier(self):
+    def MAJPanier(self) -> None:
         """
         Update le Panier
         """
         self.textBrowserPanier.setText(Panier.__str__())
 
-    def Filtrage(self):
+    def Filtrage(self) -> None:
         #simplfication de valeur
         filtre = self.comboBoxFiltre.currentText()
         console = self.textBrowserInventaire
@@ -109,9 +113,11 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
             if filtre == index.Type: #il y a un filtre
                 console.append(str(index))
 
-    def Erreur(self,p_code):
+    def Erreur(self,p_code=0) -> None:
         """
         Fonction qui gere les erreurs
+
+        :param p_code: int
         """
         #raccourci
         le = self.labelErreur

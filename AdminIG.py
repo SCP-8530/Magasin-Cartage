@@ -56,7 +56,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
     ###########
     # METHODE #
     ###########
-    def HideLabel(self):
+    def HideLabel(self) -> None:
         """
         Cache tout les object sous les boutons
         """
@@ -80,7 +80,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
         self.textEdit6.hide()
         self.textEdit7.hide()
 
-    def LabelVisibiliterPrime(self):
+    def LabelVisibiliterPrime(self) -> None:
         """
         Observe la combobox de type et affiche les labels et autre object necessaire
         """
@@ -108,7 +108,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
             self.buttonModifier.setDisabled(True)
             self.buttonSupprimer.setDisabled(True)
         
-    def LabelVisibiliterArticle(self):
+    def LabelVisibiliterArticle(self) -> None:
         """
         regler les autre objets sous les bouton (comme LabelVisibiliterPrime)
         """
@@ -162,9 +162,11 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
             self.label6.setText("Effet du sort:")
             self.label7.setText("Sacrifice necessaire:")
 
-    def Erreur(self,p_code):
+    def Erreur(self,p_code=0) -> None:
         """
         gere le message d'erreur
+
+        :param p_code: int
         """
         #afficher l'erreur
         self.labelErreur.show()

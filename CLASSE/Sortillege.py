@@ -25,6 +25,14 @@ from CLASSE.Article import Article
 class Sortillege(Article):
     """
     classe enfant de la classe Article
+    
+    :param p_articleName: str
+    :param p_articleID: str
+    :param p_quantite: int
+    :param p_prix: float
+    :param p_effetSortillege: str
+    :param p_energieNecessaire: str
+    :param p_sacrificeNecessaire: str
     """
     def __init__(
             self,
@@ -65,7 +73,7 @@ class Sortillege(Article):
     #################
     # Autre Methode #
     #################
-    def __str__(self):
+    def __str__(self) -> str:
         # separation de la description des effet en plusieur lignes de 25 caractere
         lstDescription = self._effetSortillege.split()
         # calcule de ligne de 25 caractere
@@ -126,7 +134,7 @@ class Sortillege(Article):
         #return
         return strChaine
 
-    def __dict__(self): 
+    def __dict__(self) -> dict: 
         Dictio = {
             "Nom": self._articleName,
             "ArticleID": self._articleID,

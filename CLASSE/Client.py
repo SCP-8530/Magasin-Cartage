@@ -25,6 +25,12 @@ import json
 class Client:
     """
     Classe qui gere le compte des clients
+
+    :param p_prenom: str
+    :param p_identifiant: str
+    :param p_mdp: str
+    :param p_credit: float
+    :param p_LstFacture: list
     """
     def __init__(
             self,
@@ -92,7 +98,7 @@ class Client:
     # Autre Methode #
     #################
 
-    def __dict__(self):
+    def __dict__(self) -> dict:
         """
         creation d'un dictionnaire des informations du client
         """
@@ -106,7 +112,7 @@ class Client:
 
         return DictSave
     
-    def __str__(self):
+    def __str__(self) -> str:
         """
         Creation d'un string
         """
@@ -120,9 +126,11 @@ class Client:
 
         return StrChaine
 
-    def Serialisation(self,New=False):
+    def Serialisation(self,New=False) -> None:
         """
         Creation d'un fichier pour serialiser le client
+
+        :param New: bool
         """
         #creation du fichier
         tf = open(f"DATACENTER/User/{self._identifiant}.json","w")
@@ -135,9 +143,11 @@ class Client:
             tf.write(f"\n{self._identifiant}")
             tf.close()
 
-    def Payer(self,p_Cout):
+    def Payer(self,p_Cout=0.00) -> None:
         """
         Paye une facture
+
+        :param p_Cout: float
         """
         #paye la facture
         self._credit -= p_Cout

@@ -21,7 +21,7 @@ from CLASSE import Potion, Sortillege, PierreMagique, Facture, Client
 ###############################
 ### DECLARATION DE FONCTION ###
 ###############################
-def Main():
+def Main() -> None:
     """
     Ouvre la page principal du magasin
     """
@@ -30,7 +30,7 @@ def Main():
     form.show()
     app.exec()
 
-def MAJInventaire():
+def MAJInventaire() -> None:
     """
     recupere tout les produit creer pour les mettre dans l'inventaire
     """
@@ -87,7 +87,7 @@ def MAJInventaire():
             #mettre dans l'inventaire
             Global["INVENTAIRE"].append(Art)
 
-def MAJUtilisateur():
+def MAJUtilisateur() -> list:
     """
     Recupere tout les utilisateur et en fait un liste d'objet
     """
@@ -116,7 +116,7 @@ def MAJUtilisateur():
 
     return lstUser
 
-def MAJFacture():
+def MAJFacture() -> None:
     """
     recupere toute les facture et mettre a jour les donne global
     """

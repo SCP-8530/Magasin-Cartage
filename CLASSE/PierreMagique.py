@@ -25,6 +25,12 @@ from CLASSE.Article import Article
 class PierreMagique(Article):
     """
     classe enfant de la classe Article
+
+    :param p_articleName: str
+    :param p_articleID: str
+    :param p_quantite: int
+    :param p_prix: float
+    :param p_energiePierre: str
     """
     def __init__(
             self,
@@ -50,7 +56,7 @@ class PierreMagique(Article):
     #################
     # Autre Methode #
     #################
-    def __str__(self):
+    def __str__(self) -> str:
         # creation de la chaine
         strChaine = f"\n╔{'═'*25}╗"
         strChaine += f"\n║{self._articleName:^25}║"
@@ -65,7 +71,7 @@ class PierreMagique(Article):
         #return
         return strChaine
     
-    def __dict__(self): 
+    def __dict__(self) -> dict: 
         Dictio = {
             "Nom": self._articleName,
             "ArticleID": self._articleID,
