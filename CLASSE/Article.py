@@ -9,7 +9,9 @@
 ###################
 ### IMPORTATION ###
 ###################
+from hashlib import new
 import json
+from re import T
 
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
@@ -60,9 +62,12 @@ class Article:
     def _get_Prix(self):
         return self._prix
     def _set_Prix(self, p_Prix):
-        if p_Prix.isdecimal() == True or p_Prix.isnumeric == True:
-            if float(p_Prix) > 0:
-                self._prix = float(p_Prix)
+        try:
+            p_Prix = float(p_Prix)
+        except ValueError:
+            pass
+        else:
+            self._prix = float(p_Prix)
     Prix = property(_get_Prix,_set_Prix)
 
     #################
@@ -84,10 +89,17 @@ class Article:
         strChaine += f"\n* Prix de l'ensemble: {self.PrixTotal()}"
         strChaine += f"\n"+"*"*25
 
-    def Serialiser(self,p_dict):
+    def Serialiser(self,p_dict,New=False):
         """
         Gere la serialisation des articles
         """
+        #serialisation
         tf = open(f"DATACENTER/Article/{self._articleID}.json","w")
         json.dump(p_dict,tf,indent=4,sort_keys=True)
         tf.close
+
+        #ajout du raccourci
+        if New == True:
+            tf = open(f"DATACENTER/User/raccourci.txt", "a")
+            tf.write(f"\n{self._identifiant}")
+            tf.close()

@@ -15,7 +15,7 @@ from CLASSE.Potion import Potion
 from CLASSE.Sortillege import Sortillege
 from CLASSE.Client import Client
 import INTERFACEGRAPHIQUE.PY.Admin as Admin
-from MainIG import MAJInventaire
+from main import MAJInventaire, MAJFacture, MAJUtilisateur
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 from GLOBAL import Global
@@ -209,17 +209,21 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
         if self.comboBoxType.currentText() == "Article":
             #affichage des article
             self.labelTitle.setText("Liste des Articles:")
+            MAJInventaire()
             for index in Global["INVENTAIRE"]:
                 self.textBrowserObjet.append(index)       
         elif self.comboBoxType.currentText() == "Utilisateur":
             #affichage des utilisateur
             self.labelTitle.setText("Liste des Utilisateur:")
-            #recuperation de la liste des objet Client puis affichage
             LstUser = MAJUtilisateur()
-            for index in LstUser():
+            for index in LstUser:
                 self.textBrowserObjet.append(index.__str__())
         elif self.comboBoxType.currentText() == "Facture":
-                 
+            #affichage des atricle
+            self.labelTitle.setText("Liste des Factures:")
+            MAJFacture()
+            for index in Global["FACTURE"]:
+                self.textBrowserObjet.append()
 
  
     def on_comboBox4_currentTextChanged(self):
@@ -310,6 +314,6 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
 
         #Si aucune erreur detecter sauvegarder
         if self.labelErreur.isHidden() == True:
-            Art.Serialiser(Art.__dict__())
+            Art.Serialiser(Art.__dict__(),True)
             MAJInventaire()
 
