@@ -210,9 +210,10 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
                     ProduitPanier.Quantite = QuantiterProduit
                     #deplacer de l'inventaire au panier
                     Panier.LstArticle.append(ProduitPanier)
+                    self.MAJPanier()
                 elif modifier == True:
                     #ajouter un produit du panier
-                    for index in Panier:
+                    for index in Panier.LstArticle:
                         if index.ArticleID == IdProduit:
                             int1 = index.Quantite
                             int2 = int(QuantiterProduit)
