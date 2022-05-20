@@ -14,7 +14,7 @@ from msilib.schema import Error
 import random
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
-from datetime import date
+import datetime
 
 #interface garphique
 import INTERFACEGRAPHIQUE.PY.MainPage as MainPage
@@ -22,9 +22,11 @@ import ConnectionPageIG
 import AdminIG
 import AjoutCreditIG
 
+
 #autre
 from CLASSE.Facture import Facture
 from GLOBAL import Global, MAJInventaire
+from main import OuvrirFacture
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
@@ -77,9 +79,19 @@ def ConfigPanier() -> None:
     """
     Configure le Panier
     """
-    Panier = Facture()
-    Panier.Date = date.today().strftime("%d %B %Y")
-    Panier.Numero = Global["ID"] + date.today().strftime("%d%m%y") + str(random.randint(0,1000))
+    str1 = Global["ID"]
+    str2_1 = datetime.datetime.today()
+    str2_2 = str2_1.strftime("%d%m%y")
+    str3 = str(random.randint(0,1000))
+    Panier.Date = str2_1.strftime("%d %B %Y")
+    Panier.Numero = f"{str1}{str2_2}{str3}"
+    Panier.LstArticle = []
+
+def OuvrirCredit() -> None:
+    Global["DIALOG ACTIF"] = True
+    form = AjoutCreditIG.gui
+    form.show()
+    form.exec_()
 
 #################
 ### PROGRAMME ###
@@ -178,7 +190,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         tf.close
         
         #ouvre la page admin
-        if IdProduit.lower == "admin" and QuantiterProduit.lower == "admin":
+        if IdProduit == "Admin" or QuantiterProduit == "Admin":
             if Global["ADMIN"].count(Global["ID"]) == 1:
                 OuvrirAdminIG()
         else: #ajoute un produit au panier
@@ -282,16 +294,19 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         Ajout des credit au client
         """
         #ouverture de la fenetre
-        Global["DIALOG ACTIF"] = True
-        while Global["DIALOG ACTIF"] == True:
-            form = AjoutCreditIG.gui()
-            form.show()
-            form.exec_()
+        OuvrirCredit()
 
         #sauvegarde
         self.updateCredit()
         Global["CLIENT"].Serialisation()
-            
+
+    @pyqtSlot()
+    def on_buttonFacture_clicked(self):
+        """
+        Ouvre l'historique des factures
+        """
+        OuvrirFacture()
+
     @pyqtSlot()
     def on_buttonPayer_clicked(self,p_panier = Panier):
         """
@@ -312,3 +327,4 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         else: #pas assez d'argent
             self.Erreur(4)
 
+    

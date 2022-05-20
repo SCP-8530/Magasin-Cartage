@@ -58,25 +58,35 @@ class Facture:
     #################
     # Autre Methode #
     #################
-    def __str__(self) -> str:
+    def __str__(self,p_dict=False) -> str:
         """
         Creation d'un string des informations a afficher dans le labelPanier
+
+        :param p_dict: bool
         """
         #parcourrir la liste des article pour recuperer un ligne de string
         StrArticle = ""
+        pt = 0.0
         for index in self.LstArticle:
-            nom = str(index.ArticleName)
-            quantite = str(index.Quantite)
-            prix = str(index.PrixTotal())
+            if p_dict == False:
+                nom = str(index.ArticleName)
+                quantite = str(index.Quantite)
+                prix = str(index.PrixTotal())
+                pt += index.PrixTotal()
+            if p_dict == True:
+                nom = index["Nom"]
+                quantite = index["Quantite"]
+                prix = index["Prix"]
+                pt += index["Prix"]
 
             StrArticle += f"\n{f'{nom} -- {quantite}':<30}{f'{prix}φ':>10}"
-
+        
         #creation du string
         StrChaine = ""
         StrChaine += f"\n{'*'*40}"
         StrChaine += f"\n* {'Numero de Facture: '+f'{self._numero}':36} *"
         StrChaine += f"\n* {'Date: '+f'{self._date}':36} *"
-        StrChaine += f"\n* {'Cout Total:':<20}{f'{self.PrixTotal()}φ':>16} *"
+        StrChaine += f"\n* {'Cout Total:':<20}{f'{pt}φ':>16} *"
         StrChaine += f"\n{'*'*40}"
         StrChaine += f"\n{'Nom -- Quantite':<25}{'Prix':>15}"
         StrChaine += f"{StrArticle}"
@@ -147,9 +157,9 @@ class Facture:
         tf.close()
 
         #ajouter la facture dans les donne du client
-        self.Client.LstFacture = self.Numero
+        self.Client.LstFacture.append(self.Numero)
 
-    def Deserialise(self,p_dict={}) -> object:
+    def Deserialise(self,p_dict={}) -> None:
         """
         Permet a la classe de se recreer a parti d'un dictionnaire
 
@@ -158,6 +168,4 @@ class Facture:
         self._numero = p_dict["Numero"]
         self._date = p_dict["Date"]
         self.LstArticle = p_dict["LstArticle"]
-        self.Client = Client.Deserialise(p_dict["Client"])
-
-        return self
+        self.Client = ""

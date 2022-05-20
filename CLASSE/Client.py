@@ -159,7 +159,7 @@ class Client:
         self._credit -= p_Cout
         self.Serialisation()
 
-    def Deserialise(self,p_dict={}) -> object:
+    def Deserialise(self,p_dict={}) -> None:
         """
         Permet a la classe de se recreer a parti d'un dictionnaire
 
@@ -171,4 +171,4 @@ class Client:
         self._credit = p_dict["Credit"]
         self.LstFacture = p_dict["LstFacture"]
 
-        return self
+

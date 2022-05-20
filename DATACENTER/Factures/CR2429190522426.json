@@ -1,12 +1,12 @@
 {
     "Client": {
-        "Credit": 98393.20000000001,
+        "Credit": 97983.29,
         "Identifiant": "CR2429",
-        "LstFacture": [],
+        "LstFacture": ["CR2429190522468"],
         "MDP": "Admin123",
         "Prenom": "Guilllaume"
     },
-    "Date": "",
+    "Date": "19 May 2022",
     "LstArticle": [
         {
             "ArticleID": "3001",
@@ -27,5 +27,5 @@
             "Type": "Pierre Magique"
         }
     ],
-    "Numero": ""
+    "Numero": "CR2429190522426"
 }

@@ -1,0 +1,21 @@
+{
+    "Client": {
+        "Credit": 98385.23999999999,
+        "Identifiant": "CR2429",
+        "LstFacture": [],
+        "MDP": "Admin123",
+        "Prenom": "Guilllaume"
+    },
+    "Date": "19 May 2022",
+    "LstArticle": [
+        {
+            "ArticleID": "1001",
+            "Energie Pierre": "Pyro",
+            "Nom": "Crystal Rouge",
+            "Prix": 1.99,
+            "Quantite": 1,
+            "Type": "Pierre Magique"
+        }
+    ],
+    "Numero": "CR2429190522468"
+}

@@ -12,6 +12,7 @@
 from GLOBAL import *
 import MainIG
 import sys
+import FactureIG
 from PyQt5 import QtWidgets
 from CLASSE import Potion, Sortillege, PierreMagique, Facture, Client 
 ##########################################################
@@ -87,6 +88,11 @@ def MAJFacture() -> None:
 
         #mettre dans la liste
         Global["FACTURE"].append(Fact.__str__())
+
+def OuvrirFacture() -> None:
+    form = FactureIG.gui()
+    form.show()
+    form.exec_()
 #################
 ### PROGRAMME ###
 #################
