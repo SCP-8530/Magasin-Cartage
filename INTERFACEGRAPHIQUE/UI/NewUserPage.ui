@@ -249,7 +249,7 @@
     <string notr="true">color: rgb(255, 0, 0);</string>
    </property>
    <property name="text">
-    <string>* prenom non valide</string>
+    <string>* mot de passe non valide</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelErreur4">

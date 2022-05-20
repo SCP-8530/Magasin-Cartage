@@ -90,8 +90,14 @@ class Client:
     def _get_Credit(self):
         return self._credit
     def _set_Credit(self, p_Credit):
-        if p_Credit.isdecimal() == True or p_Credit.isnumeric():
-            self._credit = float(p_Credit)
+        try:
+            p_Credit = float(p_Credit)
+        except ValueError:
+            pass
+        else:
+            p_Credit = float(p_Credit)
+            if p_Credit >= 0.00:
+                self._credit = p_Credit
     Credit = property(_get_Credit,_set_Credit)
     
     #################
@@ -140,7 +146,7 @@ class Client:
         #ajout du raccourci si c'est un nouveau client qui vient d'etre creer
         if New == True:
             tf = open(f"DATACENTER/User/raccourci.txt", "a")
-            tf.write(f"\n{self._identifiant}")
+            tf.write(f"{self._identifiant}\n")
             tf.close()
 
     def Payer(self,p_Cout=0.00) -> None:

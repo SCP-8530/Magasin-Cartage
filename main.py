@@ -30,63 +30,6 @@ def Main() -> None:
     form.show()
     app.exec()
 
-def MAJInventaire() -> None:
-    """
-    recupere tout les produit creer pour les mettre dans l'inventaire
-    """
-    #reset de l'inventaire
-    Global["INVENTAIRE"] = []
-    
-    #recupere la liste des ID
-    tf = open("DATACENTER/Article/raccourci.txt","r")
-    LstArticleID = tf.read().splitlines()
-    tf.close
-
-    #instancier les different article dans l'inventaire
-    for index in LstArticleID:
-        #recupere la sauvegarde de l'article
-        tf = open(f"DATACENTER/Article/{index}.json")
-        ArticleSave = json.load(tf, object_hook=dict)
-        tf.close()
-
-        #instencie l'objet
-        ##potion
-        if ArticleSave["Type"] == "Potion":
-            Art = Potion.Potion()
-            Art.ArticleName = ArticleSave["Nom"]
-            Art.ArticleID = ArticleSave["ArticleID"]
-            Art.Quantite = str(ArticleSave["Quantite"])
-            Art.Prix = str(ArticleSave["Prix"])
-            Art.EffetPotion = ArticleSave["Effet Potion"]
-            Art.DureePotion = ArticleSave["Duree Potion"]
-
-            #mettre dans l'inventaire
-            Global["INVENTAIRE"].append(Art)
-        ##sortillege
-        elif ArticleSave["Type"] == "Sortillege":
-            Art = Sortillege.Sortillege()
-            Art.ArticleName = ArticleSave["Nom"]
-            Art.ArticleID = ArticleSave["ArticleID"]
-            Art.Quantite = str(ArticleSave["Quantite"])
-            Art.Prix = str(ArticleSave["Prix"])
-            Art.EffetSortillege = ArticleSave["Effet Sortillege"]
-            Art.EnergieNecessaire = ArticleSave["Energie Necessaire"]
-            Art.SacrificeNecessaire = ArticleSave["Sacrifice Necessaire"]
-
-            #mettre dans l'inventaire
-            Global["INVENTAIRE"].append(Art)
-        ##pierre magique
-        elif ArticleSave["Type"] == "Pierre Magique":
-            Art = PierreMagique.PierreMagique()
-            Art.ArticleName = ArticleSave["Nom"]
-            Art.ArticleID = ArticleSave["ArticleID"]
-            Art.Quantite = str(ArticleSave["Quantite"])
-            Art.Prix = str(ArticleSave["Prix"])
-            Art.EnergiePierre = ArticleSave["Energie Pierre"]
-
-            #mettre dans l'inventaire
-            Global["INVENTAIRE"].append(Art)
-
 def MAJUtilisateur() -> list:
     """
     Recupere tout les utilisateur et en fait un liste d'objet
@@ -101,7 +44,7 @@ def MAJUtilisateur() -> list:
 
     #creer la liste
     for index in lstRaccourciUser:
-        tf = open(f"DATACENTER/User/{index}.json")
+        tf = open(f"DATACENTER/User/{index}.json","r")
         UserDict = json.load(tf,object_hook=dict)
         tf.close
         #instantation de l'objet

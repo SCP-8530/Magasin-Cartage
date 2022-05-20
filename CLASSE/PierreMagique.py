@@ -40,7 +40,7 @@ class PierreMagique(Article):
             p_prix = 0.00,
             p_energiePierre = ""
             ):
-        Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix,"PierreMagique")
+        Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix,"Pierre Magique")
         self._energiePierre = p_energiePierre
     
     ###########

@@ -132,6 +132,6 @@ class Ui_Dialog(object):
         self.buttonNewUser.setText(_translate("Dialog", "Créer le compte"))
         self.labelErreur1.setText(_translate("Dialog", "* prenom non valide"))
         self.labelErreur2.setText(_translate("Dialog", "* identifiant non valide"))
-        self.labelErreur3.setText(_translate("Dialog", "* prenom non valide"))
+        self.labelErreur3.setText(_translate("Dialog", "* mot de passe non valide"))
         self.labelErreur4.setText(_translate("Dialog", "* mot de passe pas identique"))
         self.labelErreur5.setText(_translate("Dialog", "* valeur non valide"))

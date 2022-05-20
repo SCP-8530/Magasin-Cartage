@@ -10,16 +10,16 @@
 ### IMPORTATION ###
 ###################
 import json
+import os
 from CLASSE.PierreMagique import PierreMagique
 from CLASSE.Potion import Potion
 from CLASSE.Sortillege import Sortillege
 from CLASSE.Client import Client
 import INTERFACEGRAPHIQUE.PY.Admin as Admin
-from main import MAJInventaire, MAJFacture, MAJUtilisateur
+from main import MAJFacture, MAJUtilisateur
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
-from GLOBAL import Global
-from main import MAJUtilisateur
+from GLOBAL import Global, MAJInventaire
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
@@ -27,7 +27,12 @@ from main import MAJUtilisateur
 ###############################
 ### DECLARATION DE FONCTION ###
 ###############################
-def IDLstArticle(p_test):
+def IDLstArticle(p_test="") -> bool:
+    """
+    Analyse les ID des article et voir si il sont la ou non
+
+    :param p_test: str
+    """
     for index in Global["INVENTAIRE"]:
         if p_test == index.ArticleID:
             return True
@@ -51,6 +56,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
         self.labelErreur.hide()
         self.HideLabel
         self.LabelVisibiliterPrime()
+        self.changeConsole()
         
     
     ###########
@@ -196,14 +202,16 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
             le.setText("* Les effets du sortillege n'est pas valide")
         if p_code == 12:
             le.setText("* Le sacrifice necessaire n'est pas valide")
+        if p_code == 13:
+            le.setText("* ID non preciser. Veuillez en ajouter un.")
+        if p_code == 14:
+            le.setText("* L'ID a ete modifier veuiller ne pas y retoucher")
+        if p_code == 15:
+            le.setText("* ID introuvable")
 
-    
-    ######################
-    # Bouton et ComboBox #
-    ######################
-    def on_comboBoxType_currentTextChanged(self):
+    def changeConsole(self) -> None:
         """
-        Change le type d'object afficher et affecter par les boutons
+        opere l'update de l'interface
         """
         self.LabelVisibiliterPrime()
         self.textBrowserObjet.setText("")
@@ -213,7 +221,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
             self.labelTitle.setText("Liste des Articles:")
             MAJInventaire()
             for index in Global["INVENTAIRE"]:
-                self.textBrowserObjet.append(index)       
+                self.textBrowserObjet.append(str(index))       
         elif self.comboBoxType.currentText() == "Utilisateur":
             #affichage des utilisateur
             self.labelTitle.setText("Liste des Utilisateur:")
@@ -226,7 +234,27 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
             MAJFacture()
             for index in Global["FACTURE"]:
                 self.textBrowserObjet.append()
+    
+    def clearLine(self) -> None:
+        """
+        Efface les line edit et autre
+        """
+        self.lineEditID.setText("")
+        self.lineEdit1.setText("")
+        self.lineEdit2.setText("")
+        self.lineEdit3.setText("")
+        self.lineEdit5.setText("")
+        self.textEdit6.setText("")
+        self.textEdit7.setText("")
 
+    ######################
+    # Bouton et ComboBox #
+    ######################
+    def on_comboBoxType_currentTextChanged(self):
+        """
+        Change le type d'object afficher et affecter par les boutons
+        """
+        self.changeConsole()
  
     def on_comboBox4_currentTextChanged(self):
         """
@@ -318,4 +346,192 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
         if self.labelErreur.isHidden() == True:
             Art.Serialiser(Art.__dict__(),True)
             MAJInventaire()
+            self.changeConsole()
+            self.clearLine()
 
+    @pyqtSlot()
+    def on_buttonModifier_clicked(self):
+        """
+        Modifier un produit
+        """
+        #recuperer les donnees
+        d0 = self.lineEditID.text()
+        d1 = self.lineEdit1.text()
+        d2 = self.lineEdit2.text()
+        d3 = self.lineEdit3.text()
+        d4 = self.comboBox4.currentText()
+        d5 = self.lineEdit5.text()
+        d6 = self.textEdit6.toPlainText()
+        d7 = self.textEdit7.toPlainText()
+
+        #regrouper les donnees
+        lstD = [d0,d1,d2,d3,d4,d5,d6,d7]
+
+        #voir si l'id existe ou est present
+        if d0 == "":
+            self.Erreur(13)
+        elif IDLstArticle(d0) == True:
+            self.Erreur(4)
+        else:#aucun erreur sur l'id on peut modifier
+            modif = True
+            #si un entre est vide les remplire automatiquement
+            for index in range(0,5,1):
+                if lstD[index] == "":
+                    #bloque le fait de modifier pour juste importer les donnees
+                    modif = False
+
+                    #recuperer l'article
+                    for index2 in Global["INVENTAIRE"]:
+                        if d0 == index2.ArticleID:
+                            Art = index2
+                            break
+                    
+                    #remplir les line edit et autre
+                    self.lineEdit1.setText(Art.str(ArticleName))
+                    self.lineEdit2.setText(Art.str(Quantite))
+                    self.lineEdit3.setText(Art.str(Prix))
+
+                    #remplir la label qu'il doivent etre modifier
+                    if d4 == "Pierre Magique":
+                        self.lineEdit1.setText(Art.str(EnergiePierre))
+                    elif d4 == "Potion":
+                        self.lineEdit5.setText(Art.str(DureePotion))
+                        self.textEdit6.setText(Art.str(EffetPotion))
+                    else:
+                        self.lineEdit5.setText(Art.str(EnergieNecessaire))
+                        self.textEdit6.setText(Art.str(EffetSortillege))
+                        self.textEdit7.setText(Art.str(SacrificeNecessaire))
+            
+            #si les entrer son presente
+            if modif == True:
+                #### Copier depuis on_buttonAjouter_clicked
+                #reset erreur
+                self.labelErreur.hide()
+
+                #voir si l'ID est inchanger valide
+                if d0 != self.lineEditID.text():
+                    self.Erreur(14)
+                    self.lineEditID.setText(d0)
+                #voir les autres erreur
+                else:
+                    #recuperer le type
+                    EntryCB = self.comboBox4.currentText()
+
+                    #creer l'article
+                    Art = ""
+                    if EntryCB == "Pierre Magique":
+                        #recupere les valeurs
+                        Art = PierreMagique()
+                        Art.ArticleName = self.lineEdit1.text()
+                        Art.ArticleID = self.lineEditID.text()
+                        Art.Quantite = self.lineEdit2.text()
+                        Art.Prix = self.lineEdit3.text()
+                        Art.Type = "Pierre Magique"
+                        Art.EnergiePierre = self.lineEdit5.text()
+
+                        #verifier les erreurs propre au type
+                        if Art.EnergiePierre == "":
+                            self.Erreur(7)
+                        
+                    elif EntryCB == "Potion":
+                        #recuperer les valeurs
+                        Art = Potion()
+                        Art.ArticleName = self.lineEdit1.text()
+                        Art.ArticleID = self.lineEditID.text()
+                        Art.Quantite = self.lineEdit2.text()
+                        Art.Prix = self.lineEdit3.text()
+                        Art.Type = "Potion"
+                        Art.DureePotion = self.lineEdit5.text()
+                        Art.EffetPotion = self.textEdit6.toPlainText()
+
+                        #verifier les erreurs propre au type
+                        if Art.DureePotion == "":
+                            self.Erreur(8)
+                        elif Art.EffetPotion == "":
+                            self.Erreur(9)
+
+                    elif EntryCB == "Sortillege":
+                        #recuperer les valeurs
+                        Art = Sortillege()
+                        Art.ArticleName = self.lineEdit1.text()
+                        Art.ArticleID = self.lineEditID.text()
+                        Art.Quantite = self.lineEdit2.text()
+                        Art.Prix = self.lineEdit3.text()
+                        Art.Type = "Sortillege"
+                        Art.EnergieNecessaire = self.lineEdit5.text()
+                        Art.EffetSortillege = self.textEdit6.toPlainText()
+                        Art.SacrificeNecessaire = self.textEdit7.toPlainText()
+
+                        #verifier les erreurs propre au type
+                        if Art.EnergieNecessaire == "":
+                            self.Erreur(10)
+                        elif Art.EffetSortillege == "":
+                            self.Erreur(11)
+                        elif Art.SacrificeNecessaire == "":
+                            self.Erreur(12)
+
+                    
+                    #Verifier les erreur commun au cahque type
+                    if Art.ArticleName == "":
+                        self.Erreur(3)
+                    elif Art.ArticleID == "":
+                        self.Erreur(4)
+                    elif Art.Quantite == 0:
+                        self.Erreur(5)
+                    elif Art.Prix == 0.00:
+                        self.Erreur(6)
+
+                #Si aucune erreur detecter sauvegarder
+                if self.labelErreur.isHidden() == True:
+                    Art.Serialiser(Art.__dict__())
+                    MAJInventaire()
+                    self.changeConsole()
+                    self.clearLine()
+
+    @pyqtSlot()
+    def on_buttonSupprimer_clicked(self):
+        """
+        Supprimer un client ou un article
+        """
+        #reset Erreur
+        self.labelErreur.hide()
+
+        #supprimer un client
+        if self.comboBoxType.currentText() == "Utilisateur":
+            #recuperer les donnees
+            LstUser = MAJUtilisateur()
+            IDentifiant = self.lineEditID.text()
+
+            #detecter le client
+            ClientDetected = False
+            for index in LstUser:
+                if index.Identifiant == IDentifiant:
+                    ClientDetected = True
+                    break
+            
+            #supprimer le client
+            if ClientDetected == False:
+                self.Erreur(15)
+            else:
+                #supprimer le fichier de sauvegarde
+                os.remove(f"DATACENTER/User/{IDentifiant}.json")
+                
+                #supprimer le client de la liste des clients
+                for index in LstUser:
+                    if index.Identifiant == IDentifiant:
+                        LstUser.remove(index)
+                        break
+                #supprimer le raccourci
+                ##reset le fichier a 0
+                tf = open("DATACENTER/User/raccourci.txt", "w")
+                tf.write("")
+                
+                ##creer la chaine a raccourci
+                Chaine = ""
+                for index in LstUser:
+                    Chaine += f"{index.Identifiant}\n"
+                tf.write(Chaine)
+                tf.close
+
+        #update interface
+        self.changeConsole()

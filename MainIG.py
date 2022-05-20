@@ -10,8 +10,11 @@
 ### IMPORTATION ###
 ###################
 #module python
+from msilib.schema import Error
+import random
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
+from datetime import date
 
 #interface garphique
 import INTERFACEGRAPHIQUE.PY.MainPage as MainPage
@@ -19,13 +22,13 @@ import ConnectionPageIG
 import AdminIG
 
 #autre
-from main import MAJInventaire
 from CLASSE.Facture import Facture
-from GLOBAL import Global
+from GLOBAL import Global, MAJInventaire
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
 Panier = Facture()
+
 ###############################
 ### DECLARATION DE FONCTION ###
 ###############################
@@ -58,7 +61,7 @@ def IndexInventaire(p_ID="") -> int:
     :param p_ID: str
     """
     for index in range(0,len(Global["INVENTAIRE"]),1):
-        if Global["INVENTAIRE"].ArticleID == p_ID:
+        if Global["INVENTAIRE"][index].ArticleID == p_ID:
             return index
 
 def OuvrirAdminIG() -> None:
@@ -68,6 +71,13 @@ def OuvrirAdminIG() -> None:
     form = AdminIG.gui()
     form.show()
     form.exec_()
+
+def ConfigPanier() -> None:
+    """
+    Configure le Panier
+    """
+    Panier.Date = date.today().strftime("%d %B %Y")
+    Panier.Numero = Global["ID"] + date.today().strftime("%d%m%y") + str(random.randint(0,1000))
 
 #################
 ### PROGRAMME ###
@@ -88,6 +98,8 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         OuvrirConnectionPage()
         MAJInventaire()
         self.Filtrage()
+        ConfigPanier()
+        self.updateCredit()
     
     ###########
     # METHODE #
@@ -121,13 +133,20 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         """
         #raccourci
         le = self.labelErreur
+        le.show()
         if p_code == 1:
             le.setText("* L'ID n'existe pas")
         if p_code == 2:
             le.setText("* La quantite n'est pas valide")
         if p_code == 3:
             le.setText("* La quantite est trop élevé")
-
+    
+    def updateCredit(self) -> None:
+        """
+        Affiche le nombre de credit que l'on possede
+        """
+        nombre = Global["CLIENT"].Credit
+        self.buttonCredit.setText(f"Credit: {nombre}φ")
     ####################
     # Bouton et Combox #
     ####################
@@ -150,14 +169,17 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         #recuperer les informations
         IdProduit = self.lineEditID.text()
         QuantiterProduit = self.lineEditQuantite.text()
-
+        tf = open("DATACENTER/Article/raccourci.txt", "r")
+        r = tf.read().splitlines()
+        tf.close
+        
         #ouvre la page admin
-        if IdProduit == "Admin" and QuantiterProduit == "Admin":
+        if IdProduit.lower == "admin" or QuantiterProduit.lower == "admin":
             if Global["ADMIN"].count(Global["ID"]) == 1:
                 OuvrirAdminIG()
         else: #ajoute un produit au panier
             #l'id n'existe pas
-            if Global["Inventaire"].count(IdProduit) == 0:
+            if r.count(IdProduit) == 0:
                 self.Erreur(1)
             #La quantiter n'est pas un chiffre
             elif QuantiterProduit.isnumeric == False:
@@ -170,15 +192,89 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
                 self.Erreur(3)
             #aucune erreur
             else:
-                #configuere les objets
-                ProduitInventaire = Global["INVENTAIRE"][IndexInventaire(IdProduit)]
-                ProduitPanier = ProduitInventaire
-                ProduitPanier.Quantite = QuantiterProduit
+                #clean line edit
+                self.lineEditID.setText("")
+                self.lineEditQuantite.setText("")
 
-                #deplacer de l'invantaire au panier
-                ProduitInventaire.Quantite -= QuantiterProduit
-                Panier.LstArticle.append(ProduitPanier)
+                #modifier ou ajouter
+                modifier = False
+                for index in Panier.LstArticle:
+                    if IdProduit == index.ArticleID:
+                        modifier = True
+                        break
+                    
 
-                #mettre a jour les interfaces
-                self.Filtrage()
-                self.MAJPanier()
+                if modifier == False:
+                    indexe = IndexInventaire(IdProduit)
+                    ProduitPanier = Global["INVENTAIRE"][indexe]
+                    ProduitPanier.Quantite = QuantiterProduit
+                    #deplacer de l'inventaire au panier
+                    Panier.LstArticle.append(ProduitPanier)
+                elif modifier == True:
+                    #ajouter un produit du panier
+                    for index in Panier:
+                        if index.ArticleID == IdProduit:
+                            int1 = index.Quantite
+                            int2 = int(QuantiterProduit)
+                            int3 =  int2 + int1
+                            #verifier que la nouvelle qunatite ne depasse pas l'inventaire
+                            if int3 > ProduitSelect(IdProduit).Quantite:
+                                self.Erreur(3)
+                            elif int3 <= ProduitSelect(IdProduit).Quantite:
+                                index.Quantite = str(int3)
+                                self.MAJPanier()
+                            break
+                
+    
+    @pyqtSlot()
+    def on_buttonRetirer_clicked(self):
+        """
+        retire un element du panier
+        """
+        #reset des erreurs
+        self.labelErreur.hide()
+
+        #recuperer les informations
+        IdProduit = self.lineEditID.text()
+        QuantiterProduit = self.lineEditQuantite.text()
+
+        #verifier si l'element est dans le panier
+        for index in Panier.LstArticle:
+            if index.ArticleID == IdProduit:
+                self.labelErreur.hide()
+                #verifier que la quantier est valide
+                try:
+                    int(QuantiterProduit)
+                except ValueError:
+                    self.Error(2)
+                else:
+                    #verifier que la quantiter est pas trop grande
+                    if index.Quantite < int(QuantiterProduit):
+                        self.Erreur(3)
+                break
+            else:
+                self.Erreur(1)
+        
+        #Retire le produit du panier
+        if self.labelErreur.isVisible() == False:
+            #clean line edit
+            self.lineEditID.setText("")
+            self.lineEditQuantite.setText("")
+            
+            #retrouver l'article a modifier
+            for index in range(0,len(Panier.LstArticle),1):
+                if Panier.LstArticle[index].ArticleID == IdProduit:
+                    int1 = Panier.LstArticle[index].Quantite
+                    int2 = int(QuantiterProduit)
+                    int3 = int1 - int2
+                    Panier.LstArticle[index].Quantite = str(int3)
+        
+        #mettre a jour l'interface
+        self.MAJPanier()
+
+        
+            
+        
+            
+
+

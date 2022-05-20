@@ -71,11 +71,11 @@ class Potion(Article):
         # calcule de ligne de 25 caractere
         strTemp1 = ""
         strTemp2 = ""
-        strFinal = f"║{'Description:':<25}║"
+        strFinal = f"\n║{'Description:':<25}║"
         while True:
             #terminer la boucle si il n'y a plus rien
             if len(lstDescription) == 0:
-                strFinal += f"\n║{strTemp2:^25}║"
+                strFinal += f"\n║{strTemp2:<25}║"
                 break
             
             #analyse

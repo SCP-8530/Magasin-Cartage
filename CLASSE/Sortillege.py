@@ -79,11 +79,11 @@ class Sortillege(Article):
         # calcule de ligne de 25 caractere
         strTemp1a = ""
         strTemp2a = ""
-        strFinalA = f"║{'Description:':<25}║"
+        strFinalA = f"\n║{'Description:':<25}║"
         while True:
             #terminer la boucle si il n'y a plus rien
             if len(lstDescription) == 0:
-                strFinalA += f"\n║{strTemp2a:^25}║"
+                strFinalA += f"\n║{strTemp2a:<25}║"
                 break
             
             #analyse
@@ -101,11 +101,11 @@ class Sortillege(Article):
         # calcule de ligne de 25 caractere
         strTemp1b = ""
         strTemp2b = ""
-        strFinalB = f"║{'Description:':<25}║"
+        strFinalB = f"\n║{'Description:':<25}║"
         while True:
             #terminer la boucle si il n'y a plus rien
             if len(lstSacrifice) == 0:
-                strFinalB += f"\n║{strTemp2b:^25}║"
+                strFinalB += f"\n║{strTemp2b:<25}║"
                 break
             
             #analyse

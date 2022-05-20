@@ -128,6 +128,11 @@
       <height>192</height>
      </rect>
     </property>
+    <property name="font">
+     <font>
+      <family>Consolas</family>
+     </font>
+    </property>
    </widget>
    <widget class="QLabel" name="labelPanier">
     <property name="geometry">
@@ -259,6 +264,19 @@
      </property>
     </item>
    </widget>
+   <widget class="QPushButton" name="buttonCredit">
+    <property name="geometry">
+     <rect>
+      <x>620</x>
+      <y>310</y>
+      <width>151</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Credit: φ</string>
+    </property>
+   </widget>
    <zorder>labelQuantite</zorder>
    <zorder>textBrowserInventaire</zorder>
    <zorder>labelTitre</zorder>
@@ -274,6 +292,7 @@
    <zorder>buttonFacture</zorder>
    <zorder>labelFiltre</zorder>
    <zorder>comboBoxFiltre</zorder>
+   <zorder>buttonCredit</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

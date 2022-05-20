@@ -12,6 +12,8 @@
 from CLASSE.Client import Client
 import json
 
+from CLASSE.PierreMagique import PierreMagique
+
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
@@ -63,21 +65,21 @@ class Facture:
         #parcourrir la liste des article pour recuperer un ligne de string
         StrArticle = ""
         for index in self.LstArticle:
-            nom = self.LstArticle[index].ArticleName
-            quantite = self.LstArticle[index].Quantite
-            prix = self.LstArticle[index].PrixTotal()
+            nom = str(index.ArticleName)
+            quantite = str(index.Quantite)
+            prix = str(index.PrixTotal())
 
-            StrArticle += f"{f'{nom}({quantite})':<30}{f'{prix}φ':>10}"
+            StrArticle += f"\n{f'{nom} -- {quantite}':<30}{f'{prix}φ':>10}"
 
         #creation du string
         StrChaine = ""
         StrChaine += f"\n{'*'*40}"
-        StrChaine += f"\n* {'Numero de Facture: '+{self._numero}:36} *"
-        StrChaine += f"\n* {'Date: '+{self._date}:36} *"
+        StrChaine += f"\n* {'Numero de Facture: '+f'{self._numero}':36} *"
+        StrChaine += f"\n* {'Date: '+f'{self._date}':36} *"
         StrChaine += f"\n* {'Cout Total:':<20}{f'{self.PrixTotal()}φ':>16} *"
         StrChaine += f"\n{'*'*40}"
-        StrChaine += f"\n{'Nom(Quantite)':<25}{'Prix':>15}"
-        StrChaine += f"\n{StrArticle}"
+        StrChaine += f"\n{'Nom -- Quantite':<25}{'Prix':>15}"
+        StrChaine += f"{StrArticle}"
 
         #envoie du string
         return StrChaine

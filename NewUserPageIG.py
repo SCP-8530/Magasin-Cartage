@@ -96,8 +96,9 @@ class gui(QtWidgets.QDialog, NewUserPage.Ui_Dialog):
             ErreurDetecter = True
         ##credit non valide
         if Client.Credit == 0.00:
-            self.labelErreur5.show()
-            ErreurDetecter = True
+            if self.lineEditCredits.text() != "0":
+                self.labelErreur5.show()
+                ErreurDetecter = True
 
         #fermer la fenetre si aucune erreur est detecter et aussi sauvegarde le compte
         if ErreurDetecter == False:

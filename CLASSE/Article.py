@@ -83,7 +83,12 @@ class Article:
         """
         Calcule prix total a debourser celon cela la quantiter de que l'on a
         """
-        fltPrix = self._prix * self._quantite
+        quant = self._quantite
+        fltPrix = 0.00
+        while quant > 0:
+            fltPrix += self._prix
+            quant += -1
+
         return fltPrix
 
     def __str__(self) -> str:
@@ -109,6 +114,6 @@ class Article:
 
         #ajout du raccourci
         if New == True:
-            tf = open(f"DATACENTER/User/raccourci.txt", "a")
-            tf.write(f"\n{self._identifiant}")
+            tf = open(f"DATACENTER/Article/raccourci.txt", "a")
+            tf.write(f"{self._articleID}\n")
             tf.close()
