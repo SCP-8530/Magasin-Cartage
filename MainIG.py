@@ -20,6 +20,7 @@ from datetime import date
 import INTERFACEGRAPHIQUE.PY.MainPage as MainPage
 import ConnectionPageIG
 import AdminIG
+import AjoutCreditIG
 
 #autre
 from CLASSE.Facture import Facture
@@ -76,6 +77,7 @@ def ConfigPanier() -> None:
     """
     Configure le Panier
     """
+    Panier = Facture()
     Panier.Date = date.today().strftime("%d %B %Y")
     Panier.Numero = Global["ID"] + date.today().strftime("%d%m%y") + str(random.randint(0,1000))
 
@@ -140,6 +142,8 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
             le.setText("* La quantite n'est pas valide")
         if p_code == 3:
             le.setText("* La quantite est trop élevé")
+        if p_code == 4:
+            le.setText("* Vous n'avez pas assez de credit pour vos achats")
     
     def updateCredit(self) -> None:
         """
@@ -174,7 +178,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         tf.close
         
         #ouvre la page admin
-        if IdProduit.lower == "admin" or QuantiterProduit.lower == "admin":
+        if IdProduit.lower == "admin" and QuantiterProduit.lower == "admin":
             if Global["ADMIN"].count(Global["ID"]) == 1:
                 OuvrirAdminIG()
         else: #ajoute un produit au panier
@@ -226,7 +230,6 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
                                 self.MAJPanier()
                             break
                 
-    
     @pyqtSlot()
     def on_buttonRetirer_clicked(self):
         """
@@ -273,9 +276,39 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         #mettre a jour l'interface
         self.MAJPanier()
 
-        
-            
-        
-            
+    @pyqtSlot()
+    def on_buttonCredit_clicked(self):
+        """
+        Ajout des credit au client
+        """
+        #ouverture de la fenetre
+        Global["DIALOG ACTIF"] = True
+        while Global["DIALOG ACTIF"] == True:
+            form = AjoutCreditIG.gui()
+            form.show()
+            form.exec_()
 
+        #sauvegarde
+        self.updateCredit()
+        Global["CLIENT"].Serialisation()
+            
+    @pyqtSlot()
+    def on_buttonPayer_clicked(self,p_panier = Panier):
+        """
+        Payer se qui se trouve dans le panier
+        """
+        #mettre le client dans le panier
+        p_panier.Client = Global["CLIENT"]
+
+        #payer
+        if p_panier.PayerFacture() == True:    
+            #reset du panier
+            ConfigPanier()
+
+            #update interface
+            self.textBrowserPanier.setText("")
+            self.labelErreur.setText("Merci pour votre achat")
+
+        else: #pas assez d'argent
+            self.Erreur(4)
 

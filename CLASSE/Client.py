@@ -158,3 +158,17 @@ class Client:
         #paye la facture
         self._credit -= p_Cout
         self.Serialisation()
+
+    def Deserialise(self,p_dict={}) -> object:
+        """
+        Permet a la classe de se recreer a parti d'un dictionnaire
+
+        :param p_dict: dict
+        """
+        self._prenom = p_dict["Prenom"]
+        self._identifiant = p_dict["Identifiant"]
+        self._mdp = p_dict["MDP"]
+        self._credit = p_dict["Credit"]
+        self.LstFacture = p_dict["LstFacture"]
+
+        return self

@@ -13,11 +13,12 @@ from CLASSE import Client, Potion,Sortillege,PierreMagique
 import json
 
 Global = {
-    "ID" : "CR2429",
+    "ID" : "",
     "CLIENT" : Client.Client(),
     "ADMIN" : ["CR2429","FC2000"],
     "INVENTAIRE" : [],
-    "FACTURE" : []
+    "FACTURE" : [],
+    "DIALOG ACTIF": False
     }
 
 def RACCOURCIS() -> list:

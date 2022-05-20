@@ -88,11 +88,16 @@ class Facture:
         """
         creation d'un dictionnaire des informations
         """
+        #simplification de lstArticle
+        simpleLST = []
+        for index in self.LstArticle:
+            simpleLST.append(index.__dict__())
+        #creation du dict
         DictSave = {
-            ["Numero"]:self._numero,
-            ["Date"]:self._date,
-            ["LstArticle"]:self.LstArticle,
-            ["Client"]:self.Client
+            "Numero":self._numero,
+            "Date":self._date,
+            "LstArticle":simpleLST,
+            "Client":self.Client.__dict__()
         }
 
         return DictSave
@@ -142,3 +147,17 @@ class Facture:
         tf.close()
 
         #ajouter la facture dans les donne du client
+        self.Client.LstFacture = self.Numero
+
+    def Deserialise(self,p_dict={}) -> object:
+        """
+        Permet a la classe de se recreer a parti d'un dictionnaire
+
+        :param p_dict: dict
+        """
+        self._numero = p_dict["Numero"]
+        self._date = p_dict["Date"]
+        self.LstArticle = p_dict["LstArticle"]
+        self.Client = Client.Deserialise(p_dict["Client"])
+
+        return self
