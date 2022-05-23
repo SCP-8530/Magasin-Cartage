@@ -86,7 +86,7 @@ class Facture:
         StrChaine += f"\n{'*'*40}"
         StrChaine += f"\n* {'Numero de Facture: '+f'{self._numero}':36} *"
         StrChaine += f"\n* {'Date: '+f'{self._date}':36} *"
-        StrChaine += f"\n* {'Cout Total:':<20}{f'{pt}φ':>16} *"
+        StrChaine += f"\n* {'Cout Total:':<20}{f'{pt:.2f}φ':>16} *"
         StrChaine += f"\n{'*'*40}"
         StrChaine += f"\n{'Nom -- Quantite':<25}{'Prix':>15}"
         StrChaine += f"{StrArticle}"
@@ -158,6 +158,7 @@ class Facture:
 
         #ajouter la facture dans les donne du client
         self.Client.LstFacture.append(self.Numero)
+        self.Client.Serialisation()
 
     def Deserialise(self,p_dict={}) -> None:
         """

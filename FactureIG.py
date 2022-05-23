@@ -51,7 +51,7 @@ class gui(QtWidgets.QDialog, FacturePage.Ui_Dialog):
     # Bouton #
     ##########
     @pyqtSlot()
-    def on_buttoncClose_clicked(self):
+    def on_buttonClose_clicked(self):
         """
         Ferme la fenetre
         """

@@ -31,7 +31,6 @@ def RACCOURCIS() -> list:
 
     return r
 
-
 def fCLIENT(p_identifiant="") -> None:
     """
     generer un client sauvegarder

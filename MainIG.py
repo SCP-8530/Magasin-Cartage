@@ -10,11 +10,12 @@
 ### IMPORTATION ###
 ###################
 #module python
-from msilib.schema import Error
+import json
 import random
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 import datetime
+
 
 #interface garphique
 import INTERFACEGRAPHIQUE.PY.MainPage as MainPage
@@ -25,6 +26,10 @@ import AjoutCreditIG
 
 #autre
 from CLASSE.Facture import Facture
+from CLASSE.Article import Article
+from CLASSE.PierreMagique import PierreMagique
+from CLASSE.Potion import Potion
+from CLASSE.Sortillege import Sortillege
 from GLOBAL import Global, MAJInventaire
 from main import OuvrirFacture
 ##########################################################
@@ -89,7 +94,7 @@ def ConfigPanier() -> None:
 
 def OuvrirCredit() -> None:
     Global["DIALOG ACTIF"] = True
-    form = AjoutCreditIG.gui
+    form = AjoutCreditIG.gui()
     form.show()
     form.exec_()
 
@@ -162,7 +167,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         Affiche le nombre de credit que l'on possede
         """
         nombre = Global["CLIENT"].Credit
-        self.buttonCredit.setText(f"Credit: {nombre}φ")
+        self.buttonCredit.setText(f"Credit: {nombre:.2f}φ")
     ####################
     # Bouton et Combox #
     ####################
@@ -317,9 +322,52 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
 
         #payer
         if p_panier.PayerFacture() == True:    
+            #mise a jour de l'inventaire
+            for index in p_panier.LstArticle:
+                #trouver l'id du produit a modif
+                IdDuProduitAModif = index.ArticleID
+
+                #recuperer l'objet a modifier se trouvant dans la liste
+                for index2 in range(0,len(Global["INVENTAIRE"]),1):
+                    indexDansGlobal = Global["INVENTAIRE"][index2].ArticleID
+                    if indexDansGlobal == IdDuProduitAModif:
+                        #modif la serialisation
+                        tf = open(f"DATACENTER/Article/{IdDuProduitAModif}.json","r")
+                        aModif = json.load(tf,object_hook=dict)
+                        tf.close
+                        aModif["Quantite"] = aModif["Quantite"] - index.Quantite
+                        
+                        #mettre a jour la serialisation/(recreer le produit parce que pourquoi pas)
+                        if aModif["Type"] == "Pierre Magique":
+                            Art = PierreMagique()
+                            Art.Type = aModif["Type"]
+                            Art.EnergiePierre = aModif["Energie Pierre"]
+                        elif aModif["Type"] == "Potion":
+                            Art = Potion()
+                            Art.Type = aModif["Type"]
+                            Art.EffetPotion = aModif["Effet Potion"]
+                            Art.DureePotion = aModif["Duree Potion"]
+                        else:
+                            Art = Sortillege()
+                            Art.Type = aModif["Type"]
+                            Art.EffetSortillege = aModif["Effet Sortillege"]
+                            Art.EnergieNecessaire = aModif["Energie Necessaire"]
+                            Art.SacrificeNecessaire = aModif["Sacrifice Necessaire"]
+                        Art.ArticleID = aModif["ArticleID"]
+                        Art.ArticleName = aModif["Nom"]
+                        Art.Prix = str(aModif["Prix"])
+                        Art.Quantite = str(aModif["Quantite"])
+                        Art.Serialiser(p_dict=Art.__dict__())
+                        break
+
+                
+                #modification a faire
+                MAJInventaire()
+
+                
             #reset du panier
             ConfigPanier()
-
+            
             #update interface
             self.textBrowserPanier.setText("")
             self.labelErreur.setText("Merci pour votre achat")

@@ -95,7 +95,7 @@ class Client:
         except ValueError:
             pass
         else:
-            p_Credit = float(p_Credit)
+            p_Credit = float(f"{p_Credit:.2f}")
             if p_Credit >= 0.00:
                 self._credit = p_Credit
     Credit = property(_get_Credit,_set_Credit)
