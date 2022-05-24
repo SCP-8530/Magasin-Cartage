@@ -36,7 +36,7 @@ class gui(QtWidgets.QDialog, FacturePage.Ui_Dialog):
         super(gui, self).__init__(parent)
         self.setupUi(self)
         #customisation
-        self.setWindowTitle("Hystorique de Facture")
+        self.setWindowTitle("Historique de Facture")
         self.ViewFacture()
     
     def ViewFacture(self):

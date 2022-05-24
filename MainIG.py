@@ -112,7 +112,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         super(gui, self).__init__(parent)
         self.setupUi(self)
         #customisation
-        self.setWindowTitle("Page de Connection")
+        self.setWindowTitle("Page principal")
         self.labelErreur.hide()
         OuvrirConnectionPage()
         MAJInventaire()

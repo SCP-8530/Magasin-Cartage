@@ -16,7 +16,7 @@ from CLASSE.Potion import Potion
 from CLASSE.Sortillege import Sortillege
 from CLASSE.Client import Client
 import INTERFACEGRAPHIQUE.PY.Admin as Admin
-from main import MAJFacture, MAJUtilisateur
+from main import MAJFacture, MAJUtilisateur, MajArticleLst
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 from GLOBAL import Global, MAJInventaire
@@ -52,7 +52,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
         super(gui, self).__init__(parent)
         self.setupUi(self)
         #customisation
-        self.setWindowTitle("Page de Connection")
+        self.setWindowTitle("Page Admin")
         self.labelErreur.hide()
         self.HideLabel
         self.LabelVisibiliterPrime()
@@ -532,6 +532,29 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
                     Chaine += f"{index.Identifiant}\n"
                 tf.write(Chaine)
                 tf.close
+        #supprimer un article
+        else:
+            #recuperer les donnees
+            LstArticle = MajArticleLst()
+            IDentifiant = self.lineEditID.text()
+
+            #trouver l'id
+            for index in LstArticle:
+                if index == IDentifiant:
+                    #supprimer l'id
+                    LstArticle.remove(index)
+
+                    #refaire la liste des raccourcis
+                    chaine = ""
+                    for index2 in LstArticle:
+                        chaine += f"{index2}/n"
+                        tf = open("DATACENTER/Article/raccourci.txt","w")
+                        tf.write(chaine)
+                        tf.close()
+                #update de l'interface
+                MAJInventaire()
+                break
+
 
         #update interface
         self.changeConsole()

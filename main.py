@@ -60,6 +60,20 @@ def MAJUtilisateur() -> list:
 
     return lstUser
 
+def MajArticleLst() -> list:
+    """
+    Recupere tout les utilisateur et en fait un liste d'objet
+    """
+    #valeur a return
+    lstUser = []
+
+    #recuperation des raccourcis
+    tf = open("DATACENTER/Article/raccourci.txt","r")
+    lstRaccourciArticle = tf.read().splitlines()
+    tf.close
+
+    return lstRaccourciArticle
+
 def MAJFacture() -> None:
     """
     recupere toute les facture et mettre a jour les donne global
