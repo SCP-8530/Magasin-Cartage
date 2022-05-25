@@ -22,20 +22,21 @@ import INTERFACEGRAPHIQUE.PY.MainPage as MainPage
 import ConnectionPageIG
 import AdminIG
 import AjoutCreditIG
+import FactureIG
 
 
 #autre
-from CLASSE.Facture import Facture
-from CLASSE.Article import Article
-from CLASSE.PierreMagique import PierreMagique
-from CLASSE.Potion import Potion
-from CLASSE.Sortillege import Sortillege
-from GLOBAL import Global, MAJInventaire
-from main import OuvrirFacture
+import CLASSE.Facture as F
+import CLASSE.Article as A
+import CLASSE.PierreMagique as PM
+import CLASSE.Potion as P
+import CLASSE.Sortillege as S
+import GLOBAL as G
+from main import MAJInventaire
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
-Panier = Facture()
+Panier = F.Facture()
 
 ###############################
 ### DECLARATION DE FONCTION ###
@@ -45,7 +46,7 @@ def OuvrirConnectionPage() -> None:
     gere la connection
     """
     while True:
-        if Global["ID"]=="":
+        if G.Global["ID"]=="":
             form = ConnectionPageIG.gui()
             form.show()
             form.exec_()
@@ -58,7 +59,7 @@ def ProduitSelect(p_ID="") -> object:
 
     :param p_ID: str
     """
-    for index in Global["INVENTAIRE"]:
+    for index in G.Global["INVENTAIRE"]:
         if index.ArticleID == p_ID:
             return index
 
@@ -68,8 +69,8 @@ def IndexInventaire(p_ID="") -> int:
 
     :param p_ID: str
     """
-    for index in range(0,len(Global["INVENTAIRE"]),1):
-        if Global["INVENTAIRE"][index].ArticleID == p_ID:
+    for index in range(0,len(G.Global["INVENTAIRE"]),1):
+        if G.Global["INVENTAIRE"][index].ArticleID == p_ID:
             return index
 
 def OuvrirAdminIG() -> None:
@@ -84,7 +85,7 @@ def ConfigPanier() -> None:
     """
     Configure le Panier
     """
-    str1 = Global["ID"]
+    str1 = G.Global["ID"]
     str2_1 = datetime.datetime.today()
     str2_2 = str2_1.strftime("%d%m%y")
     str3 = str(random.randint(0,1000))
@@ -93,7 +94,7 @@ def ConfigPanier() -> None:
     Panier.LstArticle = []
 
 def OuvrirCredit() -> None:
-    Global["DIALOG ACTIF"] = True
+    G.Global["DIALOG ACTIF"] = True
     form = AjoutCreditIG.gui()
     form.show()
     form.exec_()
@@ -138,7 +139,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         console.setText("")
 
         #filtrage
-        for index in Global["INVENTAIRE"]:
+        for index in G.Global["INVENTAIRE"]:
             if filtre == "Tous type de produit": #pas de filtre
                 console.append(str(index))
             if filtre == index.Type: #il y a un filtre
@@ -166,7 +167,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         """
         Affiche le nombre de credit que l'on possede
         """
-        nombre = Global["CLIENT"].Credit
+        nombre = G.Global["CLIENT"].Credit
         self.buttonCredit.setText(f"Credit: {nombre:.2f}φ")
     ####################
     # Bouton et Combox #
@@ -196,8 +197,10 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         
         #ouvre la page admin
         if IdProduit == "Admin" or QuantiterProduit == "Admin":
-            if Global["ADMIN"].count(Global["ID"]) == 1:
+            if G.Global["ADMIN"].count(G.Global["ID"]) == 1:
                 OuvrirAdminIG()
+                self.lineEditID.setText("")
+                self.lineEditQuantite.setText("")
         else: #ajoute un produit au panier
             #l'id n'existe pas
             if r.count(IdProduit) == 0:
@@ -227,7 +230,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
 
                 if modifier == False:
                     indexe = IndexInventaire(IdProduit)
-                    ProduitPanier = Global["INVENTAIRE"][indexe]
+                    ProduitPanier = G.Global["INVENTAIRE"][indexe]
                     ProduitPanier.Quantite = QuantiterProduit
                     #deplacer de l'inventaire au panier
                     Panier.LstArticle.append(ProduitPanier)
@@ -240,7 +243,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
                             int2 = int(QuantiterProduit)
                             int3 =  int2 + int1
                             #verifier que la nouvelle qunatite ne depasse pas l'inventaire
-                            if int3 > ProduitSelect(IdProduit).Quantite:
+                            if int3 > int(ProduitSelect(IdProduit).Quantite):
                                 self.Erreur(3)
                             elif int3 <= ProduitSelect(IdProduit).Quantite:
                                 index.Quantite = str(int3)
@@ -303,14 +306,16 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
 
         #sauvegarde
         self.updateCredit()
-        Global["CLIENT"].Serialisation()
+        G.Global["CLIENT"].Serialisation()
 
     @pyqtSlot()
     def on_buttonFacture_clicked(self):
         """
         Ouvre l'historique des factures
         """
-        OuvrirFacture()
+        form = FactureIG.gui()
+        form.show()
+        form.exec_()
 
     @pyqtSlot()
     def on_buttonPayer_clicked(self,p_panier = Panier):
@@ -318,7 +323,7 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
         Payer se qui se trouve dans le panier
         """
         #mettre le client dans le panier
-        p_panier.Client = Global["CLIENT"]
+        p_panier.Client = G.Global["CLIENT"]
 
         #payer
         if p_panier.PayerFacture() == True:    
@@ -328,8 +333,8 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
                 IdDuProduitAModif = index.ArticleID
 
                 #recuperer l'objet a modifier se trouvant dans la liste
-                for index2 in range(0,len(Global["INVENTAIRE"]),1):
-                    indexDansGlobal = Global["INVENTAIRE"][index2].ArticleID
+                for index2 in range(0,len(G.Global["INVENTAIRE"]),1):
+                    indexDansGlobal = G.Global["INVENTAIRE"][index2].ArticleID
                     if indexDansGlobal == IdDuProduitAModif:
                         #modif la serialisation
                         tf = open(f"DATACENTER/Article/{IdDuProduitAModif}.json","r")
@@ -339,16 +344,16 @@ class gui(QtWidgets.QMainWindow, MainPage.Ui_MainWindow):
                         
                         #mettre a jour la serialisation/(recreer le produit parce que pourquoi pas)
                         if aModif["Type"] == "Pierre Magique":
-                            Art = PierreMagique()
+                            Art = PM.PierreMagique()
                             Art.Type = aModif["Type"]
                             Art.EnergiePierre = aModif["Energie Pierre"]
                         elif aModif["Type"] == "Potion":
-                            Art = Potion()
+                            Art = P.Potion()
                             Art.Type = aModif["Type"]
                             Art.EffetPotion = aModif["Effet Potion"]
                             Art.DureePotion = aModif["Duree Potion"]
                         else:
-                            Art = Sortillege()
+                            Art = S.Sortillege()
                             Art.Type = aModif["Type"]
                             Art.EffetSortillege = aModif["Effet Sortillege"]
                             Art.EnergieNecessaire = aModif["Energie Necessaire"]

@@ -9,11 +9,16 @@
 ###################
 ### IMPORTATION ###
 ###################
-from GLOBAL import Global, RACCOURCIS, fCLIENT
-import INTERFACEGRAPHIQUE.PY.ConnectionPage as ConnectionPage
-import NewUserPageIG
+#importation python
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
+
+#importation projet
+import GLOBAL as G
+from main import RACCOURCIS, fCLIENT
+import INTERFACEGRAPHIQUE.PY.ConnectionPage as ConnectionPage
+import NewUserPageIG
+
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
@@ -62,16 +67,15 @@ class gui(QtWidgets.QDialog, ConnectionPage.Ui_Dialog):
             self.labelErreur.show()
         else:
             fCLIENT(LoginIdentifiant)
-            if Global["CLIENT"].MDP == LoginMDP:
+            if G.Global["CLIENT"].MDP == LoginMDP:
                 #identifiaction correct
-                Global["ID"] = LoginIdentifiant
+                G.Global["ID"] = LoginIdentifiant
                 self.close()
             else:
                 #mauvaise mot de passe
                 self.lineEditMotDePasse.setText("")
                 self.labelErreur.show()
-
-    
+ 
     @pyqtSlot()
     def on_buttonNouveauCompte_clicked(self):
         """
@@ -80,6 +84,7 @@ class gui(QtWidgets.QDialog, ConnectionPage.Ui_Dialog):
         #reset erreur
         self.labelErreur.hide()
 
+        #demarrer la page
         form = NewUserPageIG.gui()
         form.show()
         form.exec_()

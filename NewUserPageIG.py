@@ -9,9 +9,9 @@
 ###################
 ### IMPORTATION ###
 ###################
-from CLASSE import Client as C
+import CLASSE.Client as C
 from INTERFACEGRAPHIQUE.PY import NewUserPage
-from GLOBAL import RACCOURCIS
+from main import RACCOURCIS
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 ##########################################################

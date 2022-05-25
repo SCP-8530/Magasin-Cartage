@@ -19,6 +19,7 @@ class Ui_Dialog(object):
         self.textBrowserObjet.setGeometry(QtCore.QRect(20, 50, 391, 541))
         font = QtGui.QFont()
         font.setFamily("Consolas")
+        font.setPointSize(12)
         self.textBrowserObjet.setFont(font)
         self.textBrowserObjet.setObjectName("textBrowserObjet")
         self.labelTitle = QtWidgets.QLabel(Dialog)

@@ -9,17 +9,18 @@
 ###################
 ### IMPORTATION ###
 ###################
-import json
+#importation python
 import os
-from CLASSE.PierreMagique import PierreMagique
-from CLASSE.Potion import Potion
-from CLASSE.Sortillege import Sortillege
-from CLASSE.Client import Client
-import INTERFACEGRAPHIQUE.PY.Admin as Admin
-from main import MAJFacture, MAJUtilisateur, MajArticleLst
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
-from GLOBAL import Global, MAJInventaire
+
+#importation projet
+import CLASSE.PierreMagique as PM
+import CLASSE.Potion as P
+import CLASSE.Sortillege as S
+import INTERFACEGRAPHIQUE.PY.Admin as Admin
+from main import MAJFacture, MAJUtilisateur, MajArticleLst, MAJInventaire
+import GLOBAL as G
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
@@ -33,7 +34,7 @@ def IDLstArticle(p_test="") -> bool:
 
     :param p_test: str
     """
-    for index in Global["INVENTAIRE"]:
+    for index in G.Global["INVENTAIRE"]:
         if p_test == index.ArticleID:
             return True
     return False
@@ -219,21 +220,24 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
         if self.comboBoxType.currentText() == "Article":
             #affichage des article
             self.labelTitle.setText("Liste des Articles:")
+            self.textBrowserObjet.setFontPointSize(12)
             MAJInventaire()
-            for index in Global["INVENTAIRE"]:
+            for index in G.Global["INVENTAIRE"]:
                 self.textBrowserObjet.append(str(index))       
         elif self.comboBoxType.currentText() == "Utilisateur":
             #affichage des utilisateur
             self.labelTitle.setText("Liste des Utilisateur:")
+            self.textBrowserObjet.setFontPointSize(12)
             LstUser = MAJUtilisateur()
             for index in LstUser:
                 self.textBrowserObjet.append(index.__str__())
         elif self.comboBoxType.currentText() == "Facture":
             #affichage des atricle
             self.labelTitle.setText("Liste des Factures:")
+            self.textBrowserObjet.setFontPointSize(8)
             MAJFacture()
-            for index in Global["FACTURE"]:
-                self.textBrowserObjet.append()
+            for index in G.Global["FACTURE"]:
+                self.textBrowserObjet.append(index)
     
     def clearLine(self) -> None:
         """
@@ -282,7 +286,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
             Art = ""
             if EntryCB == "Pierre Magique":
                 #recupere les valeurs
-                Art = PierreMagique()
+                Art = PM.PierreMagique()
                 Art.ArticleName = self.lineEdit1.text()
                 Art.ArticleID = self.lineEditID.text()
                 Art.Quantite = self.lineEdit2.text()
@@ -296,7 +300,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
                 
             elif EntryCB == "Potion":
                 #recuperer les valeurs
-                Art = Potion()
+                Art = P.Potion()
                 Art.ArticleName = self.lineEdit1.text()
                 Art.ArticleID = self.lineEditID.text()
                 Art.Quantite = self.lineEdit2.text()
@@ -313,7 +317,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
 
             elif EntryCB == "Sortillege":
                 #recuperer les valeurs
-                Art = Sortillege()
+                Art = S.Sortillege()
                 Art.ArticleName = self.lineEdit1.text()
                 Art.ArticleID = self.lineEditID.text()
                 Art.Quantite = self.lineEdit2.text()
@@ -370,7 +374,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
         #voir si l'id existe ou est present
         if d0 == "":
             self.Erreur(13)
-        elif IDLstArticle(d0) == True:
+        elif IDLstArticle(d0) == False:
             self.Erreur(4)
         else:#aucun erreur sur l'id on peut modifier
             modif = True
@@ -379,28 +383,29 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
                 if lstD[index] == "":
                     #bloque le fait de modifier pour juste importer les donnees
                     modif = False
-
+                    
                     #recuperer l'article
-                    for index2 in Global["INVENTAIRE"]:
+                    Art = ""
+                    for index2 in G.Global["INVENTAIRE"]:
                         if d0 == index2.ArticleID:
                             Art = index2
                             break
                     
                     #remplir les line edit et autre
-                    self.lineEdit1.setText(Art.str(ArticleName))
-                    self.lineEdit2.setText(Art.str(Quantite))
-                    self.lineEdit3.setText(Art.str(Prix))
+                    self.lineEdit1.setText(str(Art.ArticleName))
+                    self.lineEdit2.setText(str(Art.Quantite))
+                    self.lineEdit3.setText(str(Art.Prix))
 
                     #remplir la label qu'il doivent etre modifier
                     if d4 == "Pierre Magique":
-                        self.lineEdit1.setText(Art.str(EnergiePierre))
+                        self.lineEdit5.setText(str(Art.EnergiePierre))
                     elif d4 == "Potion":
-                        self.lineEdit5.setText(Art.str(DureePotion))
-                        self.textEdit6.setText(Art.str(EffetPotion))
+                        self.lineEdit5.setText(str(Art.DureePotion))
+                        self.textEdit6.setText(str(Art.EffetPotion))
                     else:
-                        self.lineEdit5.setText(Art.str(EnergieNecessaire))
-                        self.textEdit6.setText(Art.str(EffetSortillege))
-                        self.textEdit7.setText(Art.str(SacrificeNecessaire))
+                        self.lineEdit5.setText(str(Art.EnergieNecessaire))
+                        self.textEdit6.setText(str(Art.EffetSortillege))
+                        self.textEdit7.setText(str(Art.SacrificeNecessaire))
             
             #si les entrer son presente
             if modif == True:
@@ -421,7 +426,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
                     Art = ""
                     if EntryCB == "Pierre Magique":
                         #recupere les valeurs
-                        Art = PierreMagique()
+                        Art = PM.PierreMagique()
                         Art.ArticleName = self.lineEdit1.text()
                         Art.ArticleID = self.lineEditID.text()
                         Art.Quantite = self.lineEdit2.text()
@@ -435,7 +440,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
                         
                     elif EntryCB == "Potion":
                         #recuperer les valeurs
-                        Art = Potion()
+                        Art = P.Potion()
                         Art.ArticleName = self.lineEdit1.text()
                         Art.ArticleID = self.lineEditID.text()
                         Art.Quantite = self.lineEdit2.text()
@@ -452,7 +457,7 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
 
                     elif EntryCB == "Sortillege":
                         #recuperer les valeurs
-                        Art = Sortillege()
+                        Art = S.Sortillege()
                         Art.ArticleName = self.lineEdit1.text()
                         Art.ArticleID = self.lineEditID.text()
                         Art.Quantite = self.lineEdit2.text()
@@ -533,28 +538,36 @@ class gui(QtWidgets.QDialog, Admin.Ui_Dialog):
                 tf.write(Chaine)
                 tf.close
         #supprimer un article
-        else:
+        elif self.comboBoxType.currentText() == "Article":
             #recuperer les donnees
             LstArticle = MajArticleLst()
             IDentifiant = self.lineEditID.text()
 
             #trouver l'id
+            ArticleSupprimer = False
             for index in LstArticle:
                 if index == IDentifiant:
+                    ArticleSupprimer = True
+                    #supprimer le fichier de sauvegarde
+                    os.remove(f"DATACENTER/Article/{IDentifiant}.json")
+
                     #supprimer l'id
                     LstArticle.remove(index)
 
                     #refaire la liste des raccourcis
                     chaine = ""
                     for index2 in LstArticle:
-                        chaine += f"{index2}/n"
+                        chaine += f"{index2}\n"
                         tf = open("DATACENTER/Article/raccourci.txt","w")
                         tf.write(chaine)
                         tf.close()
-                #update de l'interface
-                MAJInventaire()
-                break
-
+                    #update de l'inventaire
+                    MAJInventaire()
+                    break
+            
+            #Erreur
+            if ArticleSupprimer == False:
+                self.Erreur(15)
 
         #update interface
         self.changeConsole()

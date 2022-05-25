@@ -10,6 +10,7 @@
 ### IMPORTATION ###
 ###################
 import json
+import main as M
 
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
@@ -18,6 +19,7 @@ import json
 ###############################
 ### DECLARATION DE FONCTION ###
 ###############################
+
 
 #################
 ### PROGRAMME ###
@@ -84,7 +86,6 @@ class Client:
             if critere.count(2) > 0:
                 if critere.count(3) > 0:
                     self._mdp = p_MDP
-
     MDP = property(_get_MDP,_set_MDP)
 
     def _get_Credit(self):
@@ -108,12 +109,18 @@ class Client:
         """
         creation d'un dictionnaire des informations du client
         """
+        #recuperer uniquement les ID des factures
+        lstIdFact = []
+        for index in self.LstFacture:
+            lstIdFact.append(index.Numero)
+
+        #creation du dictionnaire a serialiser
         DictSave = {
             "Prenom":self._prenom,
             "Identifiant":self._identifiant,
             "MDP":self._mdp,
             "Credit":self._credit,
-            "LstFacture":self.LstFacture,
+            "LstFacture":lstIdFact,
         }
 
         return DictSave
@@ -122,13 +129,19 @@ class Client:
         """
         Creation d'un string
         """
-        StrChaine = f"\n**********"
-        StrChaine +=f"\n* Prenom: {self._prenom}"
-        StrChaine +=f"\n* Identifiant: {self._identifiant}"
-        StrChaine +=f"\n* MDP: {self._mdp}"
-        StrChaine +=f"\n* Credit: {self._credit}"
-        StrChaine +=f"\n* LstFacture: {self.LstFacture}"
-        StrChaine += "\n**********"
+        #recuperation uniquement des numeros de facture
+        lstIdFact = []
+        for index in self.LstFacture:
+            lstIdFact.append(index.Numero)
+
+        #creation du string
+        StrChaine = f"\n╔{'═'*25}"
+        StrChaine +=f"\n║ Prenom: {self._prenom}"
+        StrChaine +=f"\n║ Identifiant: {self._identifiant}"
+        StrChaine +=f"\n║ MDP: {self._mdp}"
+        StrChaine +=f"\n║ Credit: {self._credit}"
+        StrChaine +=f"\n╠{'═'*25}"
+        StrChaine +=f"\n║ LstFacture: {lstIdFact}"
 
         return StrChaine
 
@@ -165,10 +178,23 @@ class Client:
 
         :param p_dict: dict
         """
+        #deserialiser les informations de base
         self._prenom = p_dict["Prenom"]
         self._identifiant = p_dict["Identifiant"]
         self._mdp = p_dict["MDP"]
         self._credit = p_dict["Credit"]
-        self.LstFacture = p_dict["LstFacture"]
 
+        #deserialiser la liste de facture et donc les factures dedans
+        ObjetLst = []
+        for index in p_dict["LstFacture"]:
+            #ouvrir le fichier de la facture
+            tf = open(f"DATACENTER/Factures/{index}.json","r")
+            Dictio = json.load(tf,object_hook=dict)
+            tf.close()
+
+            #ajoute de la Facture dans la list
+            ObjetLst.append(M.FactureCreate(Dictio))
+        self.LstFacture = ObjetLst
+    
+    
 

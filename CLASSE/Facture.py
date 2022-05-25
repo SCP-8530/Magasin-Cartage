@@ -9,22 +9,13 @@
 ###################
 ### IMPORTATION ###
 ###################
-from CLASSE.Client import Client
 import json
-
-from CLASSE.PierreMagique import PierreMagique
-
-##########################################################
-### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
-##########################################################
-
-###############################
-### DECLARATION DE FONCTION ###
-###############################
+import CLASSE.Client as C
+import main as M
 
 #################
 ### PROGRAMME ###
-#################
+#################   
 class Facture:
     """
     Classe qui gere les factures des differents clients
@@ -34,7 +25,7 @@ class Facture:
     :param p_LstArticle: lst
     :param p_Client: object
     """
-    def __init__(self,p_numero = "", p_date = "", p_LstArticle = [], p_Client = Client()):
+    def __init__(self,p_numero = "", p_date = "", p_LstArticle = [], p_Client = C.Client()):
         self._numero = p_numero
         self._date = p_date
         self.LstArticle = p_LstArticle
@@ -58,38 +49,39 @@ class Facture:
     #################
     # Autre Methode #
     #################
-    def __str__(self,p_dict=False) -> str:
+    def __str__(self,p_bool=False) -> str:
         """
         Creation d'un string des informations a afficher dans le labelPanier
 
-        :param p_dict: bool
+        :param p_bool: bool
         """
         #parcourrir la liste des article pour recuperer un ligne de string
         StrArticle = ""
         pt = 0.0
         for index in self.LstArticle:
-            if p_dict == False:
+            if p_bool == False:
                 nom = str(index.ArticleName)
                 quantite = str(index.Quantite)
-                prix = str(index.PrixTotal())
+                prix = index.PrixTotal()
                 pt += index.PrixTotal()
-            if p_dict == True:
+            if p_bool == True:
                 nom = index["Nom"]
                 quantite = index["Quantite"]
                 prix = index["Prix"]
                 pt += index["Prix"]
 
-            StrArticle += f"\n{f'{nom} -- {quantite}':<30}{f'{prix}φ':>10}"
+            StrArticle += f"\n║ {f'{nom} -- {quantite}':<30}{f'{prix:.2f}φ':>10} ║"
         
         #creation du string
         StrChaine = ""
-        StrChaine += f"\n{'*'*40}"
-        StrChaine += f"\n* {'Numero de Facture: '+f'{self._numero}':36} *"
-        StrChaine += f"\n* {'Date: '+f'{self._date}':36} *"
-        StrChaine += f"\n* {'Cout Total:':<20}{f'{pt:.2f}φ':>16} *"
-        StrChaine += f"\n{'*'*40}"
-        StrChaine += f"\n{'Nom -- Quantite':<25}{'Prix':>15}"
+        StrChaine += f"\n╔{'═'*42}╗"
+        StrChaine += f"\n║ {'Numero de Facture: ':<20}{f'{self._numero}':>20} ║"
+        StrChaine += f"\n║ {'Date: ':<20}{f'{self._date}':>20} ║"
+        StrChaine += f"\n║ {'Cout Total:':<20}{f'{pt:.2f}φ':>20} ║"
+        StrChaine += f"\n╠{'═'*42}╣"
+        StrChaine += f"\n║ {'Nom -- Quantite':<25}{'Prix':>15} ║"
         StrChaine += f"{StrArticle}"
+        StrChaine += f"\n╚{'═'*42}╝"
 
         #envoie du string
         return StrChaine
@@ -102,6 +94,10 @@ class Facture:
         simpleLST = []
         for index in self.LstArticle:
             simpleLST.append(index.__dict__())
+        
+        #recupere un client modifier sans liste facture
+        self.Client.LstFacture = []
+
         #creation du dict
         DictSave = {
             "Numero":self._numero,
@@ -157,7 +153,7 @@ class Facture:
         tf.close()
 
         #ajouter la facture dans les donne du client
-        self.Client.LstFacture.append(self.Numero)
+        self.Client.LstFacture.append(self)
         self.Client.Serialisation()
 
     def Deserialise(self,p_dict={}) -> None:
@@ -166,7 +162,10 @@ class Facture:
 
         :param p_dict: dict
         """
+        #mettre les element classique
         self._numero = p_dict["Numero"]
         self._date = p_dict["Date"]
         self.LstArticle = p_dict["LstArticle"]
-        self.Client = ""
+        
+        #instancier correctement le client
+        self.Client = M.InstancieClient(p_dict["Client"])

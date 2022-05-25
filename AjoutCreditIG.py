@@ -10,8 +10,7 @@
 ### IMPORTATION ###
 ###################
 from INTERFACEGRAPHIQUE.PY import AjoutCredit
-from CLASSE.Client import Client
-from GLOBAL import *
+import GLOBAL as G
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
 ##########################################################
@@ -60,10 +59,10 @@ class gui(QtWidgets.QDialog, AjoutCredit.Ui_Dialog):
             self.labelErreur.show()
         else:
             #ajouter les credit au client
-            credit = Global["CLIENT"].Credit
+            credit = G.Global["CLIENT"].Credit
             credit += float(valeur)
-            Global["CLIENT"].Credit = str(credit)
-            Global["DIALOG ACTIF"] = False
+            G.Global["CLIENT"].Credit = str(credit)
+            G.Global["DIALOG ACTIF"] = False
             self.close()        
 
         

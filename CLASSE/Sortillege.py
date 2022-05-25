@@ -9,20 +9,12 @@
 ###################
 ### IMPORTATION ###
 ###################
-from CLASSE.Article import Article
-
-##########################################################
-### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
-##########################################################
-
-###############################
-### DECLARATION DE FONCTION ###
-###############################
+import CLASSE.Article as A
 
 #################
 ### PROGRAMME ###
 #################
-class Sortillege(Article):
+class Sortillege(A.Article):
     """
     classe enfant de la classe Article
     
@@ -44,7 +36,7 @@ class Sortillege(Article):
             p_energieNecessaire = "",
             p_sacrificeNecessaire = ""
             ):
-        Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix,"Sortillege")
+        A.Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix,"Sortillege")
         self._effetSortillege = p_effetSortillege
         self._energieNecessaire = p_energieNecessaire
         self._sacrificeNecessaire = p_sacrificeNecessaire

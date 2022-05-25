@@ -9,27 +9,142 @@
 ###################
 ### IMPORTATION ###
 ###################
-from GLOBAL import *
-import MainIG
+#importation de python
 import sys
-import FactureIG
+import json
 from PyQt5 import QtWidgets
-from CLASSE import Potion, Sortillege, PierreMagique, Facture, Client 
-##########################################################
-### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
-##########################################################
+
+#importation du projet
+import MainIG
+import GLOBAL as G
+import CLASSE.Potion as P
+import CLASSE.PierreMagique as PM
+import CLASSE.Sortillege as S
+import CLASSE.Client as C
 
 ###############################
 ### DECLARATION DE FONCTION ###
 ###############################
-def Main() -> None:
+def RACCOURCIS() -> list:
     """
-    Ouvre la page principal du magasin
+    Prepare la liste de tout les identifiant sauvegarder
     """
-    app = QtWidgets.QApplication(sys.argv)
-    form = MainIG.gui()
-    form.show()
-    app.exec()
+    tf = open("DATACENTER/User/raccourci.txt", "r")
+    r = tf.read().splitlines()
+    tf.close
+
+    return r
+
+def fCLIENT(p_identifiant="") -> None:
+    """
+    generer un client sauvegarder
+
+    :param p_identifiant: str
+    """
+    #recuperer la sauvegarde
+    tf = open(f"DATACENTER/User/{p_identifiant}.json")
+    dictSave = json.load(tf, object_hook=dict)
+    tf.close
+
+    #ajouter les caracteristique du client a la valeur GLOBAL
+    G.Global["CLIENT"].Deserialise(dictSave)
+
+def MAJInventaire() -> None:
+    """
+    recupere tout les produit creer pour les mettre dans l'inventaire
+    """
+    #reset de l'inventaire
+    G.Global["INVENTAIRE"] = []
+    
+    #recupere la liste des ID
+    tf = open("DATACENTER/Article/raccourci.txt","r")
+    LstArticleID = tf.read().splitlines()
+    tf.close
+
+    #instancier les different article dans l'inventaire
+    for index in LstArticleID:
+        #recupere la sauvegarde de l'article
+        tf = open(f"DATACENTER/Article/{index}.json")
+        ArticleSave = json.load(tf, object_hook=dict)
+        tf.close()
+
+        #instencie l'objet
+        ##potion
+        if ArticleSave["Type"] == "Potion":
+            Art = P.Potion()
+            Art.ArticleName = ArticleSave["Nom"]
+            Art.ArticleID = ArticleSave["ArticleID"]
+            Art.Quantite = str(ArticleSave["Quantite"])
+            Art.Prix = str(ArticleSave["Prix"])
+            Art.EffetPotion = ArticleSave["Effet Potion"]
+            Art.DureePotion = ArticleSave["Duree Potion"]
+
+            #mettre dans l'inventaire
+            G.Global["INVENTAIRE"].append(Art)
+        ##sortillege
+        elif ArticleSave["Type"] == "Sortillege":
+            Art = S.Sortillege()
+            Art.ArticleName = ArticleSave["Nom"]
+            Art.ArticleID = ArticleSave["ArticleID"]
+            Art.Quantite = str(ArticleSave["Quantite"])
+            Art.Prix = str(ArticleSave["Prix"])
+            Art.EffetSortillege = ArticleSave["Effet Sortillege"]
+            Art.EnergieNecessaire = ArticleSave["Energie Necessaire"]
+            Art.SacrificeNecessaire = ArticleSave["Sacrifice Necessaire"]
+
+            #mettre dans l'inventaire
+            G.Global["INVENTAIRE"].append(Art)
+        ##pierre magique
+        elif ArticleSave["Type"] == "Pierre Magique":
+            Art = PM.PierreMagique()
+            Art.ArticleName = ArticleSave["Nom"]
+            Art.ArticleID = ArticleSave["ArticleID"]
+            Art.Quantite = str(ArticleSave["Quantite"])
+            Art.Prix = str(ArticleSave["Prix"])
+            Art.EnergiePierre = ArticleSave["Energie Pierre"]
+
+            #mettre dans l'inventaire
+            G.Global["INVENTAIRE"].append(Art)
+
+def MAJFacture() -> None:
+    """
+    recupere toute les facture et mettre a jour les donne global
+    """
+    #importation
+    import CLASSE.Facture as F
+
+    #reset de l'inventaire
+    G.Global["FACTURE"] = []
+    
+    #recupere la liste des ID
+    tf = open("DATACENTER/Factures/raccourci.txt","r")
+    LstFactureID = tf.read().splitlines()
+    tf.close
+
+    #instancier les different article dans l'inventaire
+    for index in LstFactureID:
+        #recupere la sauvegarde de l'article
+        tf = open(f"DATACENTER/Factures/{index}.json")
+        FactureSave = json.load(tf, object_hook=dict)
+        tf.close()
+
+        #instencie l'objet
+        Fact = F.Facture()
+        Fact.Deserialise(FactureSave)
+
+        #mettre dans la liste
+        G.Global["FACTURE"].append(Fact.__str__(p_bool=True))
+
+def InstancieClient(p_dict={}) -> object:
+    """
+    Creer un objet client.
+    (Fonction creer juste pour eviter un bug de boucle)
+
+    :param p_dict: dict
+    """
+    c = C.Client()
+    c.Deserialise(p_dict)
+    return c
 
 def MAJUtilisateur() -> list:
     """
@@ -49,12 +164,8 @@ def MAJUtilisateur() -> list:
         UserDict = json.load(tf,object_hook=dict)
         tf.close
         #instantation de l'objet
-        user = Client.Client()
-        user.Prenom = UserDict["Prenom"]
-        user.Identifiant = UserDict["Identifiant"]
-        user.MDP = UserDict["MDP"]
-        user.Credit = str(UserDict["Credit"])
-        user.LstFacture = UserDict["LstFacture"]
+        user = C.Client()
+        user.Deserialise(UserDict)
 
         lstUser.append(user)
 
@@ -62,11 +173,8 @@ def MAJUtilisateur() -> list:
 
 def MajArticleLst() -> list:
     """
-    Recupere tout les utilisateur et en fait un liste d'objet
+    Recupere une list des Id des article
     """
-    #valeur a return
-    lstUser = []
-
     #recuperation des raccourcis
     tf = open("DATACENTER/Article/raccourci.txt","r")
     lstRaccourciArticle = tf.read().splitlines()
@@ -74,43 +182,27 @@ def MajArticleLst() -> list:
 
     return lstRaccourciArticle
 
-def MAJFacture() -> None:
+def FactureCreate(p_dict={}) -> object:
     """
-    recupere toute les facture et mettre a jour les donne global
-    """
-    #reset de l'inventaire
-    Global["FACTURE"] = []
+    Cree une facture a parti d'un dictionnaire
     
-    #recupere la liste des ID
-    tf = open("DATACENTER/Factures/raccourci.txt","r")
-    LstFactureID = tf.read().splitlines()
-    tf.close
+    :param p_dict: dict
+    """
+    #importation
+    import CLASSE.Facture as F
 
-    #instancier les different article dans l'inventaire
-    for index in LstFactureID:
-        #recupere la sauvegarde de l'article
-        tf = open(f"DATACENTER/Factures/{index}.json")
-        FactureSave = json.load(tf, object_hook=dict)
-        tf.close()
+    f = F.Facture()
+    f.Deserialise(p_dict)
 
-        #instencie l'objet
-        Fact = Facture.Facture()
-        Fact.Numero = FactureSave["Numero"]
-        Fact.Date = FactureSave["Date"]
-        Fact.LstArticle = FactureSave["LstArticle"]
-        Fact.Client = FactureSave["Client"]
-
-        #mettre dans la liste
-        Global["FACTURE"].append(Fact.__str__())
-
-def OuvrirFacture() -> None:
-    form = FactureIG.gui()
-    form.show()
-    form.exec_()
+    return f
+ 
 #################
 ### PROGRAMME ###
 #################
 
 #Demarrage de l'application
 if __name__ == "__main__":
-    Main()
+    app = QtWidgets.QApplication(sys.argv)
+    form = MainIG.gui()
+    form.show()
+    app.exec()

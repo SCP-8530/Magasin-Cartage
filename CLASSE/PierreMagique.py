@@ -9,7 +9,7 @@
 ###################
 ### IMPORTATION ###
 ###################
-from CLASSE.Article import Article
+import CLASSE.Article as A
 
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
@@ -22,7 +22,7 @@ from CLASSE.Article import Article
 #################
 ### PROGRAMME ###
 #################
-class PierreMagique(Article):
+class PierreMagique(A.Article):
     """
     classe enfant de la classe Article
 
@@ -40,7 +40,7 @@ class PierreMagique(Article):
             p_prix = 0.00,
             p_energiePierre = ""
             ):
-        Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix,"Pierre Magique")
+        A.Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix,"Pierre Magique")
         self._energiePierre = p_energiePierre
     
     ###########

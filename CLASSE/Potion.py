@@ -9,7 +9,7 @@
 ###################
 ### IMPORTATION ###
 ###################
-from CLASSE.Article import Article
+import CLASSE.Article as A
 
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
@@ -22,7 +22,7 @@ from CLASSE.Article import Article
 #################
 ### PROGRAMME ###
 #################
-class Potion(Article):
+class Potion(A.Article):
     """
     classe enfant de la classe Article
     
@@ -42,7 +42,7 @@ class Potion(Article):
             p_effetPotion = "",
             p_dureePotion = ""
             ):
-        Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix,"Potion")
+        A.Article.__init__(self,p_articleName,p_articleID,p_quantite,p_prix,"Potion")
         self._effetPotion = p_effetPotion
         self._dureePotion = p_dureePotion
     

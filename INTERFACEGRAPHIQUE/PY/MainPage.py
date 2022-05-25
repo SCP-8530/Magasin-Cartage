@@ -21,6 +21,7 @@ class Ui_MainWindow(object):
         self.textBrowserInventaire.setGeometry(QtCore.QRect(20, 60, 401, 481))
         font = QtGui.QFont()
         font.setFamily("Consolas")
+        font.setPointSize(12)
         self.textBrowserInventaire.setFont(font)
         self.textBrowserInventaire.setObjectName("textBrowserInventaire")
         self.labelTitre = QtWidgets.QLabel(self.centralwidget)

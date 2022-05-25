@@ -25,6 +25,7 @@
    <property name="font">
     <font>
      <family>Consolas</family>
+     <pointsize>12</pointsize>
     </font>
    </property>
   </widget>

@@ -9,11 +9,16 @@
 ###################
 ### IMPORTATION ###
 ###################
-import INTERFACEGRAPHIQUE.PY.FacturePage as FacturePage
-from CLASSE.Facture import Facture as F
-from GLOBAL import *
+#importation python
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import pyqtSlot
+import json
+
+#importation projet
+import INTERFACEGRAPHIQUE.PY.FacturePage as FacturePage
+import CLASSE.Facture as F
+import GLOBAL as G
+
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
 ##########################################################
@@ -40,13 +45,13 @@ class gui(QtWidgets.QDialog, FacturePage.Ui_Dialog):
         self.ViewFacture()
     
     def ViewFacture(self):
-        for index in Global["CLIENT"].LstFacture:
-            tf = open(f"DATACENTER/Factures/{index}.json","r")
+        for index in G.Global["CLIENT"].LstFacture:
+            tf = open(f"DATACENTER/Factures/{index.Numero}.json","r")
             dict_json = json.load(tf,object_hook=dict)
             tf.close
-            Fact = F()
+            Fact = F.Facture()
             Fact.Deserialise(dict_json)
-            self.textBrowserFacture.append(Fact.__str__(p_dict=True))
+            self.textBrowserFacture.append(Fact.__str__(p_bool=True))
     ##########
     # Bouton #
     ##########

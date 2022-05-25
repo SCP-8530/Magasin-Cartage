@@ -9,9 +9,7 @@
 ###################
 ### IMPORTATION ###
 ###################
-from hashlib import new
 import json
-from re import T
 
 ##########################################################
 ### DECLARATION DE VALEUR, DE LISTE ET DE DICTIONNAIRE ###
