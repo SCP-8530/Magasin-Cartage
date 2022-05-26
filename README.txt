@@ -41,3 +41,17 @@ Dans Sortillege
 Dans PierreMagique
 	Ajout de la methode dict
 
+---Date:25/05/2022---
+Dans Client
+	Ajout de la methode dict
+	Ajout de la methode Deserialise
+
+Dans Facture
+	Ajout de la methode Deserialise
+	Ajout du parametre p_bool dans __str__
+	Suppretion du parametre Client dans PayerFacture
+
+Dans Article
+	Modification du type de valeur retourner dans PrixTotal
+	Ajout du parametre p_dict dans Serialiser
+	Ajout du parametre New dans Serialiser
